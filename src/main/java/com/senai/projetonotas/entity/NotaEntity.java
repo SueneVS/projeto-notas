@@ -1,6 +1,7 @@
 package com.senai.projetonotas.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
 
@@ -13,10 +14,12 @@ public class NotaEntity implements Serializable {
     private long notaId;
 
 
-    @Column(nullable = false,columnDefinition = "DEFAULT 0.00")
+    @Column(nullable = false)
+    @ColumnDefault("0.00")
     private Double nota;
 
-    @Column(nullable = false,columnDefinition = "DEFAULT 0.00")
+    @Column(nullable = false)
+    @ColumnDefault("0.00")
     private Double coeficiente;
 
     @ManyToOne(optional = false) // Indica que é uma chave estrangeira e não pode ser nula

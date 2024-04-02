@@ -1,6 +1,7 @@
 package com.senai.projetonotas.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,7 +20,8 @@ public class MatriculaEntity implements Serializable {
     @Column(name = "data_matricula", nullable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate dataMatricula;
 
-    @Column(name = "media_final", nullable = false,columnDefinition = "DEFAULT 0.00")
+    @Column(name = "media_final", nullable = false)
+    @ColumnDefault("0.00")
     private double mediaFinal;
 
     @ManyToOne(optional = false) // Indica que é uma chave estrangeira e não pode ser nula
