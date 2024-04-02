@@ -14,7 +14,7 @@ public class MatriculaEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "matricula_id", nullable = false)
-    private long disciplinaMatriculadaId;
+    private long matriculaId;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_matricula", nullable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
