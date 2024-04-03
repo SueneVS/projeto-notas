@@ -1,11 +1,13 @@
 package com.senai.projetonotas.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "aluno")
 public class AlunoEntity implements Serializable {
