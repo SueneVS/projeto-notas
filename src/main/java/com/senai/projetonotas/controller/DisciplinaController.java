@@ -36,7 +36,8 @@ public class DisciplinaController {
     public ResponseEntity<List<DisciplinaEntity>> getEntities() {
         return ResponseEntity.ok(service.getEntities());
     }
-    @GetMapping({"id"})
+
+    @GetMapping({"/{id}"})
     public ResponseEntity<DisciplinaEntity> getEntity(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(service.getEntity(id));
     }
