@@ -1,5 +1,6 @@
 package com.senai.projetonotas.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,11 +20,11 @@ public class ProfessorEntity implements Serializable {
     @Column(name = "nome", length = 150,nullable = false)
     private String nome;
 
-
-
+    @JsonIgnoreProperties({"professor", "matriculas"})
     @OneToMany(mappedBy = "professor", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<DisciplinaEntity> disciplinas;
 
+    @JsonIgnoreProperties({"professor", "matricula"})
     @OneToMany(mappedBy = "professor", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<NotaEntity> notas;
 }
