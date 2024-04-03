@@ -1,10 +1,12 @@
 package com.senai.projetonotas.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "professor")
 public class ProfessorEntity implements Serializable {
