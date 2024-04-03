@@ -2,14 +2,17 @@ package com.senai.projetonotas.service;
 
 import com.senai.projetonotas.dto.DtoGenericRequest;
 import com.senai.projetonotas.dto.DtoGenericResponse;
+import com.senai.projetonotas.entity.DisciplinaEntity;
+import com.senai.projetonotas.entity.MatriculaEntity;
 
 import java.util.List;
 
 public interface DisciplinaService {
-    public DtoGenericResponse create (DtoGenericRequest dto);
+    public DisciplinaEntity create (DisciplinaEntity dto);
     public void delete(Long id);
-    public DtoGenericResponse update (Long id,DtoGenericRequest dto);
-    public DtoGenericResponse getEntity (Long id);
-    public List<DtoGenericResponse> getEntities ();
-    public List<DtoGenericResponse> getEntities(Long id);
+    public DisciplinaEntity update (Long id, DisciplinaEntity dto);
+    public DisciplinaEntity getEntity (Long id);
+    public List<DisciplinaEntity> getEntities ();
+    public List<MatriculaEntity> getEntitiesProfessor(Long id);
+
 }

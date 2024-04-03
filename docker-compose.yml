@@ -5,7 +5,7 @@ services:
     image: postgres:14-alpine
     container_name: projeto_notas
     ports:
-      - 5432:5432
+      - 5434:5432
     volumes:
       - ./postgres:/var/lib/postgresql/data
     environment:
