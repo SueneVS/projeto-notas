@@ -49,13 +49,13 @@ public class MatriculaController {
         return ResponseEntity.ok(service.getEntities());
     }
     @GetMapping("/aluno/{id}")
-    public ResponseEntity<List<MatriculaEntity>> getEntitiesAluno(Long id) {
-        return ResponseEntity.ok(new ArrayList<>());
+    public ResponseEntity<List<MatriculaEntity>> getEntitiesAluno(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getEntitiesAluno(id));
     }
 
     @GetMapping("/disciplina/{id}")
-    public ResponseEntity<List<MatriculaEntity>> getEntitiesDisciplina(Long id) {
-        return ResponseEntity.ok(new ArrayList<>());
+    public ResponseEntity<List<MatriculaEntity>> getEntitiesDisciplina(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getEntitiesDisciplina(id));
     }
 
 }

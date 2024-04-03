@@ -13,4 +13,6 @@ public interface MatriculaService {
     public MatriculaEntity getEntity (Long id);
     public List<MatriculaEntity> getEntities ();
     public List<MatriculaEntity> getEntities(Long id);
+    public List<MatriculaEntity> getEntitiesDisciplina(Long id);
+    public List<MatriculaEntity> getEntitiesAluno(Long id);
 }

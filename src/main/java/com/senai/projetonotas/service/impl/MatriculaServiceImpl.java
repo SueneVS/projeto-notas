@@ -57,4 +57,15 @@ public class MatriculaServiceImpl implements MatriculaService {
     public List<MatriculaEntity> getEntities(Long id) {
         return repository.findAll();
     }
+
+    @Override
+    public List<MatriculaEntity> getEntitiesDisciplina(Long id) {
+        return repository.findAllByDisciplinaDisciplinaId(id);
+    }
+
+    @Override
+    public List<MatriculaEntity> getEntitiesAluno(Long id) {
+        return repository.findAllByAlunoAlunoId(id);
+    }
+
 }
