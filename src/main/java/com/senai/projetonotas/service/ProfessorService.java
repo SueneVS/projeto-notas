@@ -2,14 +2,14 @@ package com.senai.projetonotas.service;
 
 import com.senai.projetonotas.dto.DtoGenericRequest;
 import com.senai.projetonotas.dto.DtoGenericResponse;
+import com.senai.projetonotas.entity.ProfessorEntity;
 
 import java.util.List;
 
 public interface ProfessorService {
-    public DtoGenericResponse create (DtoGenericRequest dto);
+    public ProfessorEntity create (ProfessorEntity professor);
+    public List<ProfessorEntity> getEntities();
+    public ProfessorEntity getEntity (Long id);
+    public ProfessorEntity update (Long id,ProfessorEntity professor);
     public void delete(Long id);
-    public DtoGenericResponse update (Long id,DtoGenericRequest dto);
-    public DtoGenericResponse getEntity (Long id);
-    public List<DtoGenericResponse> getEntities ();
-    public List<DtoGenericResponse> getEntities(Long id);
 }

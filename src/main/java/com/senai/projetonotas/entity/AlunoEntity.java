@@ -17,7 +17,7 @@ public class AlunoEntity implements Serializable {
     @Column(name = "aluno_id", nullable = false)
     private long alunoId;
 
-    @Column(name = "nome", length = 150,nullable = false)
+    @Column(name = "nome", length = 150, nullable = false)
     private String nome;
 
 
