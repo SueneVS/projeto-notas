@@ -15,11 +15,11 @@ public class NotaEntity implements Serializable {
 
 
     @Column(nullable = false)
-    @ColumnDefault("0.00")
+    @ColumnDefault(value = "0.00")
     private Double nota;
 
     @Column(nullable = false)
-    @ColumnDefault("0.00")
+    @ColumnDefault(value = "0.00")
     private Double coeficiente;
 
     @ManyToOne(optional = false) // Indica que é uma chave estrangeira e não pode ser nula
