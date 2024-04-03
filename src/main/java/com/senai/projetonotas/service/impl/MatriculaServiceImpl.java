@@ -22,6 +22,7 @@ public class MatriculaServiceImpl implements MatriculaService {
     private final MatriculaRepository repository;
     private final DisciplinaRepository Drepository;
     private final AlunoRepository Arepository;
+
     @Override
     public MatriculaEntity create(MatriculaEntity dto) {
     Arepository.findById(dto.getAluno().getAlunoId()).orElseThrow(() -> new RuntimeException("Error"));

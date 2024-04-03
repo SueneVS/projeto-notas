@@ -2,6 +2,7 @@ package com.senai.projetonotas.service.impl;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.repository.DisciplinaRepository;
+import com.senai.projetonotas.repository.ProfessorRepository;
 import com.senai.projetonotas.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,11 @@ import java.util.List;
 public class DisciplinaServiceImpl implements DisciplinaService {
 
     private final DisciplinaRepository Drepository;
-    //private final ProfessorRepository Prespository;
+    private final ProfessorRepository Prespository;
 
     @Override
     public DisciplinaEntity create(DisciplinaEntity dto) {
-        //Prespository.findById(dto.getProfessor().getProfessorId()).orElseThrow(() -> new RuntimeException("Error"));
+        Prespository.findById(dto.getProfessor().getProfessorId()).orElseThrow(() -> new RuntimeException("Error"));
         return Drepository.save(dto);
     }
 
