@@ -2,9 +2,12 @@ package com.senai.projetonotas.service.impl;
 
 import com.senai.projetonotas.dto.DtoGenericRequest;
 import com.senai.projetonotas.dto.DtoGenericResponse;
+import com.senai.projetonotas.dto.MediaMatriculaDto;
+import com.senai.projetonotas.dto.MediasAlunoDto;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
+import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.repository.AlunoRepository;
 import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.MatriculaRepository;
@@ -13,6 +16,7 @@ import com.senai.projetonotas.service.MatriculaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -69,4 +73,16 @@ public class MatriculaServiceImpl implements MatriculaService {
         return repository.findAllByAlunoAlunoId(id);
     }
 
+    @Override
+    public MediasAlunoDto getMediasAluno(Long id){
+        List<MatriculaEntity> matriculas = getEntitiesAluno(id);
+        double notas =0.0;
+        List<MediaMatriculaDto> mediaMaticula =new ArrayList<>();
+
+        for(MatriculaEntity maticula: matriculas){
+            mediaMaticula.add(new MediaMatriculaDto(maticula.getDisciplina().getNome(), maticula.getMediaFinal()));
+            notas += maticula.getMediaFinal();
+        }
+        return  new MediasAlunoDto(mediaMaticula,(notas/matriculas.size()));
+    }
 }
