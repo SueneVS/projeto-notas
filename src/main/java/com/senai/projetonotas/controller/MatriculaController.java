@@ -2,6 +2,7 @@ package com.senai.projetonotas.controller;
 
 import com.senai.projetonotas.dto.DtoGenericRequest;
 import com.senai.projetonotas.dto.DtoGenericResponse;
+import com.senai.projetonotas.dto.MediasAlunoDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.MatriculaService;
 import lombok.Builder;
@@ -56,6 +57,12 @@ public class MatriculaController {
     @GetMapping("/disciplina/{id}")
     public ResponseEntity<List<MatriculaEntity>> getEntitiesDisciplina(@PathVariable(name = "id")Long id) {
         return ResponseEntity.ok(service.getEntitiesDisciplina(id));
+    }
+
+
+    @GetMapping("/medias/aluno/{id}")
+    public ResponseEntity<MediasAlunoDto> getMediasAluno(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getMediasAluno(id));
     }
 
 }

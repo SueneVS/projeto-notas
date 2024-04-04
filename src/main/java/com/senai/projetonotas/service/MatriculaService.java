@@ -2,6 +2,7 @@ package com.senai.projetonotas.service;
 
 import com.senai.projetonotas.dto.DtoGenericRequest;
 import com.senai.projetonotas.dto.DtoGenericResponse;
+import com.senai.projetonotas.dto.MediasAlunoDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface MatriculaService {
     public List<MatriculaEntity> getEntities(Long id);
     public List<MatriculaEntity> getEntitiesDisciplina(Long id);
     public List<MatriculaEntity> getEntitiesAluno(Long id);
+
+    public MediasAlunoDto getMediasAluno(Long id);
 }
+
+

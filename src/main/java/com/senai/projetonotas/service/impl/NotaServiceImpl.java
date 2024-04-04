@@ -24,7 +24,7 @@ public class NotaServiceImpl implements NotaService {
     }
     NotaEntity newNota = repository.saveAndFlush(dto);
     calculaMediaDisciplina(newNota);
-    return newNota;
+    return getEntity(newNota.getNotaId());
   }
 
   @Override
@@ -32,7 +32,6 @@ public class NotaServiceImpl implements NotaService {
     NotaEntity newNota = getEntity(id);
     repository.deleteById(id);
     calculaMediaDisciplina(newNota);
-
   }
 
   @Override
@@ -42,12 +41,9 @@ public class NotaServiceImpl implements NotaService {
     if(dto.getNota() > 10){
       throw new RuntimeException("Nota do aluno supoerior a 10");
     }
-
     NotaEntity newNota = repository.saveAndFlush(dto);
     calculaMediaDisciplina(newNota);
-    return newNota;
-
-
+    return getEntity(id);
   }
 
   @Override
@@ -68,8 +64,8 @@ public class NotaServiceImpl implements NotaService {
   private void calculaMediaDisciplina(NotaEntity newNota){
     MatriculaEntity matricula = Mrepository.findById(newNota.getMatricula().getMatriculaId()).orElseThrow(() -> new RuntimeException("Error"));
 
-    Double coeficiente = 0.0;
-    Double somaNotas = 0.0;
+    double coeficiente = 0.0;
+    double somaNotas = 0.0;
 
     List<NotaEntity> notas = matricula.getNotas();
 
@@ -82,9 +78,7 @@ public class NotaServiceImpl implements NotaService {
       throw new RuntimeException("Coeficiente maior que 1");
     }
 
-
-
-    matricula.setMediaFinal((somaNotas/notas.size()));
+    matricula.setMediaFinal((somaNotas));
     Mrepository.saveAndFlush(matricula);
   }
 }
