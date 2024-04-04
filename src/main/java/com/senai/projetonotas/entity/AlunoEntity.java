@@ -27,4 +27,5 @@ public class AlunoEntity implements Serializable {
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<MatriculaEntity> matriculas;
+
 }

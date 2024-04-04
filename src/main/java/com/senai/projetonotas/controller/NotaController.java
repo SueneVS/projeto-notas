@@ -3,6 +3,7 @@ package com.senai.projetonotas.controller;
 import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.service.NotaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class NotaController {
 
   @PostMapping
   public ResponseEntity<NotaEntity> create(@RequestBody NotaEntity dto) {
-    return ResponseEntity.ok(service.create(dto));
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
   }
 
   @PutMapping("{id}")

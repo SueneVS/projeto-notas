@@ -8,6 +8,9 @@ import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.entity.NotaEntity;
+import com.senai.projetonotas.exception.CampoObrigatorioException;
+import com.senai.projetonotas.exception.MatriculaDuplicadaException;
+import com.senai.projetonotas.exception.NotFoundException;
 import com.senai.projetonotas.repository.AlunoRepository;
 import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.MatriculaRepository;
@@ -29,11 +32,21 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     @Override
     public MatriculaEntity create(MatriculaEntity dto) {
-    Arepository.findById(dto.getAluno().getAlunoId()).orElseThrow(() -> new RuntimeException("Error"));
-    Drepository.findById(dto.getDisciplina().getDisciplinaId()).orElseThrow(() -> new RuntimeException("Error"));
+
+        if (dto.getAluno() == null || dto.getDisciplina() == null) {
+            throw new CampoObrigatorioException("Os campos 'alunoId' e 'disciplinaId' são obrigatório para criar uma matricula");
+        }
+
+        Arepository.findById(dto.getAluno().getAlunoId()).orElseThrow(() -> new NotFoundException("Não encontrado aluno com este id"));
+        Drepository.findById(dto.getDisciplina().getDisciplinaId()).orElseThrow(() -> new NotFoundException("Não encontrada disciplina com este id"));
+
+        if (repository.existsByAluno_AlunoIdAndDisciplina_DisciplinaId(dto.getAluno().getAlunoId(), dto.getDisciplina().getDisciplinaId())) {
+            throw new MatriculaDuplicadaException("O aluno já está matriculado nesta disciplina.");
+        }
 
     return repository.save(dto);
     }
+
 
     @Override
     public void delete(Long id) {
@@ -50,7 +63,7 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     @Override
     public MatriculaEntity getEntity(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Error"));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrada matricula com id: " +id));
     }
 
     @Override

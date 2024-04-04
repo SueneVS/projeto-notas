@@ -9,4 +9,6 @@ import java.util.List;
 public interface MatriculaRepository extends JpaRepository<MatriculaEntity, Long> {
     List<MatriculaEntity> findAllByDisciplinaDisciplinaId(Long id);
     List<MatriculaEntity> findAllByAlunoAlunoId(Long id);
+    boolean existsByAluno_AlunoIdAndDisciplina_DisciplinaId(long alunoId, long disciplinaId);
+
 }

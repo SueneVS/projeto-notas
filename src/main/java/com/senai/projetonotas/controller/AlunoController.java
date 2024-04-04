@@ -3,6 +3,7 @@ package com.senai.projetonotas.controller;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.service.AlunoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class AlunoController {
 
   @PostMapping
   public ResponseEntity<AlunoEntity> create(@RequestBody AlunoEntity dto) {
-    return ResponseEntity.ok(service.create(dto));
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
   }
 
   @PutMapping("{id}")
