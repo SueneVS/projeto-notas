@@ -4,6 +4,7 @@ import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class DisciplinaController {
 
     @PostMapping
     public ResponseEntity<DisciplinaEntity> create(@RequestBody DisciplinaEntity dto) {
-        return ResponseEntity.ok(service.create(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @DeleteMapping("{id}")

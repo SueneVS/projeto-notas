@@ -3,6 +3,7 @@ package com.senai.projetonotas.controller;
 import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.service.NotaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ import java.util.List;
 public class NotaController {
 
   private final NotaService service;
+
+  // Não há esses metodos de Get em Notas
+  /*
   @GetMapping()
   public ResponseEntity<List<NotaEntity>> getEntities() {
     return ResponseEntity.ok(service.getEntities());
@@ -24,9 +28,15 @@ public class NotaController {
     return ResponseEntity.ok(service.getEntity(id));
   }
 
+  */
+  @GetMapping("/matriculas/{id}")
+  public ResponseEntity<List<NotaEntity>> getNotasByMatriculaId(@PathVariable Long id) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.getNotasByMatriculaId(id));
+  }
+
   @PostMapping
   public ResponseEntity<NotaEntity> create(@RequestBody NotaEntity dto) {
-    return ResponseEntity.ok(service.create(dto));
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
   }
 
   @PutMapping("{id}")

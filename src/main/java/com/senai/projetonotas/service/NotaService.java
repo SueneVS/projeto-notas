@@ -11,4 +11,6 @@ public interface NotaService {
     public NotaEntity getEntity (Long id);
     public List<NotaEntity> getEntities ();
     public List<NotaEntity> getEntities(Long id);
+
+    public List<NotaEntity> getNotasByMatriculaId(Long id);
 }

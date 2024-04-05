@@ -8,6 +8,7 @@ import com.senai.projetonotas.service.MatriculaService;
 import lombok.Builder;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class MatriculaController {
 
     @PostMapping
     public ResponseEntity<MatriculaEntity> create(@RequestBody MatriculaEntity dto) {
-        return ResponseEntity.ok(service.create(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @DeleteMapping("{id}")

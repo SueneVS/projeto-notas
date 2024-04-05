@@ -1,6 +1,8 @@
 package com.senai.projetonotas.service.impl;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
+import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.ProfessorRepository;
 import com.senai.projetonotas.service.DisciplinaService;
@@ -19,7 +21,12 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
     @Override
     public DisciplinaEntity create(DisciplinaEntity dto) {
-        Prespository.findById(dto.getProfessor().getProfessorId()).orElseThrow(() -> new RuntimeException("Error"));
+
+        if (dto.getNome() == null || dto.getProfessor() == null  ) {
+            throw new CampoObrigatorioException("Os campos 'nome' e 'professorId' são obrigatório para criar uma disciplina");
+        }
+        Prespository.findById(dto.getProfessor().getProfessorId()).orElseThrow(() -> new NotFoundException("Não encontrado professor com este id"));
+
         return Drepository.save(dto);
     }
 
@@ -32,11 +39,15 @@ public class DisciplinaServiceImpl implements DisciplinaService {
     @Override
     public DisciplinaEntity update(Long id, DisciplinaEntity dto) {
         getEntity(id);
+        if (dto.getNome() == null || dto.getProfessor() == null  ) {
+            throw new CampoObrigatorioException("Os campos 'nome' e 'professorId' são obrigatório ao atualizar uma disciplina");
+        }
+        Prespository.findById(dto.getProfessor().getProfessorId()).orElseThrow(() -> new NotFoundException("Não encontrado professor com este id"));
         dto.setDisciplinaId(id);
         return Drepository.saveAndFlush(dto);
     }
     public DisciplinaEntity getEntity(Long id) {
-        return Drepository.findById(id).orElseThrow(() -> new RuntimeException("Error"));
+        return Drepository.findById(id).orElseThrow(() -> new NotFoundException("Disciplina não encontrada com o id: " + id));
     }
 
     @Override
