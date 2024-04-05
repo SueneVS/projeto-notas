@@ -3,9 +3,9 @@ package com.senai.projetonotas.service.impl;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.entity.ProfessorEntity;
-import com.senai.projetonotas.exception.CampoObrigatorioException;
-import com.senai.projetonotas.exception.NotFoundException;
-import com.senai.projetonotas.exception.ProfessorNaoAssociadoException;
+import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.NotFoundException;
+import com.senai.projetonotas.exception.customException.ProfessorNaoAssociadoException;
 import com.senai.projetonotas.repository.MatriculaRepository;
 import com.senai.projetonotas.repository.NotaRepository;
 import com.senai.projetonotas.repository.ProfessorRepository;
@@ -55,15 +55,18 @@ public class NotaServiceImpl implements NotaService {
   }
 
   @Override
+  public List<NotaEntity> getNotasByMatriculaId(Long matriculaId) {
+    List<NotaEntity> notas = repository.findAllByMatricula_MatriculaId(matriculaId);
+    if (notas.isEmpty()) {
+      throw new NotFoundException("Matrícula inexistente ou sem nota(s) cadastrada(s)");
+    }
+    return notas;
+  }
+
+  @Override
   public NotaEntity update(Long id, NotaEntity dto) {
     getEntity(id);
-    dto.setNotaId(id);
-    if(dto.getNota() > 10){
-      throw new RuntimeException("Nota do aluno supoerior a 10");
-    }
-    NotaEntity newNota = repository.saveAndFlush(dto);
-    calculaMediaDisciplina(newNota);
-    return getEntity(id);
+    throw new UnsupportedOperationException("Não é permitido fazer alterações em notas já lançadas. Delete a nota, caso necessário.");
   }
 
   @Override
@@ -101,4 +104,5 @@ public class NotaServiceImpl implements NotaService {
     matricula.setMediaFinal((somaNotas));
     Mrepository.saveAndFlush(matricula);
   }
+
 }

@@ -1,8 +1,8 @@
 package com.senai.projetonotas.service.impl;
 
 import com.senai.projetonotas.entity.AlunoEntity;
-import com.senai.projetonotas.exception.CampoObrigatorioException;
-import com.senai.projetonotas.exception.NotFoundException;
+import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.AlunoRepository;
 import com.senai.projetonotas.service.AlunoService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +34,9 @@ public class AlunoServiceImpl implements AlunoService {
     @Override
     public AlunoEntity update(Long id, AlunoEntity dto) {
         getEntity(id);
+        if (dto.getNome() == null || dto.getDataNascimento() == null ) {
+            throw new CampoObrigatorioException("Os campos 'nome' e 'dataNascimento' são obrigatórios ao atualizar um aluno");
+        }
         dto.setAlunoId(id);
         return repository.saveAndFlush(dto);
     }

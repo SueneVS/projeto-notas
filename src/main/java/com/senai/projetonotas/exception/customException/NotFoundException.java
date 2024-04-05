@@ -1,4 +1,4 @@
-package com.senai.projetonotas.exception;
+package com.senai.projetonotas.exception.customException;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException() {

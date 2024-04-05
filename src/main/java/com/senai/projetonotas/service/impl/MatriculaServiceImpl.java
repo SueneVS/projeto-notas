@@ -1,20 +1,16 @@
 package com.senai.projetonotas.service.impl;
 
-import com.senai.projetonotas.dto.DtoGenericRequest;
-import com.senai.projetonotas.dto.DtoGenericResponse;
 import com.senai.projetonotas.dto.MediaMatriculaDto;
 import com.senai.projetonotas.dto.MediasAlunoDto;
 import com.senai.projetonotas.entity.AlunoEntity;
-import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
-import com.senai.projetonotas.entity.NotaEntity;
-import com.senai.projetonotas.exception.CampoObrigatorioException;
-import com.senai.projetonotas.exception.MatriculaDuplicadaException;
-import com.senai.projetonotas.exception.NotFoundException;
+import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.MatriculaComNotaCadastradaException;
+import com.senai.projetonotas.exception.customException.MatriculaDuplicadaException;
+import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.AlunoRepository;
 import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.MatriculaRepository;
-import com.senai.projetonotas.service.AlunoService;
 import com.senai.projetonotas.service.MatriculaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +30,7 @@ public class MatriculaServiceImpl implements MatriculaService {
     public MatriculaEntity create(MatriculaEntity dto) {
 
         if (dto.getAluno() == null || dto.getDisciplina() == null) {
-            throw new CampoObrigatorioException("Os campos 'alunoId' e 'disciplinaId' são obrigatório para criar uma matricula");
+            throw new CampoObrigatorioException("Os campos 'alunoId' e 'disciplinaId' são obrigatório para criar uma matrícula");
         }
 
         Arepository.findById(dto.getAluno().getAlunoId()).orElseThrow(() -> new NotFoundException("Não encontrado aluno com este id"));
@@ -51,19 +47,33 @@ public class MatriculaServiceImpl implements MatriculaService {
     @Override
     public void delete(Long id) {
         getEntity(id);
+
+        if(getEntity(id).getNotas().size() > 0){
+            throw new MatriculaComNotaCadastradaException("Matrícula não pode ser deletada, há nota(s) cadastrada(s)");
+        }
+
         repository.deleteById(id);
     }
 
     @Override
     public MatriculaEntity update(Long id, MatriculaEntity dto) {
         getEntity(id);
+        if (dto.getAluno() == null || dto.getDisciplina() == null) {
+            throw new CampoObrigatorioException("Os campos 'alunoId' e 'disciplinaId' são obrigatório ao atualizar uma matrícula");
+        }
+        Arepository.findById(dto.getAluno().getAlunoId()).orElseThrow(() -> new NotFoundException("Não encontrado aluno com este id"));
+        Drepository.findById(dto.getDisciplina().getDisciplinaId()).orElseThrow(() -> new NotFoundException("Não encontrada disciplina com este id"));
+
+        if (repository.existsByAluno_AlunoIdAndDisciplina_DisciplinaId(dto.getAluno().getAlunoId(), dto.getDisciplina().getDisciplinaId())) {
+            throw new MatriculaDuplicadaException("O aluno já está matriculado nesta disciplina.");
+        }
         dto.setMatriculaId(id);
         return repository.saveAndFlush(dto);
     }
 
     @Override
     public MatriculaEntity getEntity(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrada matricula com id: " +id));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrada matrícula com id: " +id));
     }
 
     @Override
@@ -78,16 +88,33 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     @Override
     public List<MatriculaEntity> getEntitiesDisciplina(Long id) {
-        return repository.findAllByDisciplinaDisciplinaId(id);
+        List<MatriculaEntity> matriculas = repository.findAllByDisciplinaDisciplinaId(id);
+        if (matriculas.isEmpty()) {
+            throw new NotFoundException("Disciplina inexistente ou não associada a nunhuma matrícula");
+        }
+        return matriculas;
     }
 
     @Override
     public List<MatriculaEntity> getEntitiesAluno(Long id) {
-        return repository.findAllByAlunoAlunoId(id);
+        List<MatriculaEntity> matriculas = repository.findAllByAlunoAlunoId(id);
+        if (matriculas.isEmpty()) {
+            throw new NotFoundException("Aluno inexistente ou não matriculado a nenhuma disciplina");
+        }
+        return matriculas;
     }
 
     @Override
     public MediasAlunoDto getMediasAluno(Long id){
+
+        AlunoEntity aluno = Arepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Aluno não encontrado com o ID: " + id));
+
+        if (aluno.getMatriculas().isEmpty()) {
+            throw new NotFoundException("Aluno não está matriculado em nenhuma disciplina.");
+        }
+
+
         List<MatriculaEntity> matriculas = getEntitiesAluno(id);
         double notas =0.0;
         List<MediaMatriculaDto> mediaMaticula =new ArrayList<>();

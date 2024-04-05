@@ -15,6 +15,9 @@ import java.util.List;
 public class NotaController {
 
   private final NotaService service;
+
+  // Não há esses metodos de Get em Notas
+  /*
   @GetMapping()
   public ResponseEntity<List<NotaEntity>> getEntities() {
     return ResponseEntity.ok(service.getEntities());
@@ -23,6 +26,12 @@ public class NotaController {
   @GetMapping("{id}")
   public ResponseEntity<NotaEntity> getEntity(@PathVariable(name = "id") Long id) {
     return ResponseEntity.ok(service.getEntity(id));
+  }
+
+  */
+  @GetMapping("/matriculas/{id}")
+  public ResponseEntity<List<NotaEntity>> getNotasByMatriculaId(@PathVariable Long id) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.getNotasByMatriculaId(id));
   }
 
   @PostMapping

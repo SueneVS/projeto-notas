@@ -1,8 +1,9 @@
 package com.senai.projetonotas.service.impl;
 
 import com.senai.projetonotas.entity.ProfessorEntity;
-import com.senai.projetonotas.exception.CampoObrigatorioException;
-import com.senai.projetonotas.exception.NotFoundException;
+import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.NotFoundException;
+import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.ProfessorRepository;
 import com.senai.projetonotas.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 
     private final ProfessorRepository professorRepository;
+    private final DisciplinaRepository disciplinaRepository;
 
     @Override
     public ProfessorEntity create(ProfessorEntity professor) {
@@ -40,12 +42,19 @@ public class ProfessorServiceImpl implements ProfessorService {
     public ProfessorEntity update(Long id, ProfessorEntity professor) {
         getEntity(id);
         professor.setProfessorId(id);
-        return professorRepository.save(professor);
+        return create(professor);
     }
 
     @Override
     public void delete(Long id) {
         getEntity(id);
+
+        long disciplinasProfessor = disciplinaRepository.countByProfessorProfessorId(id);
+
+        if (disciplinasProfessor > 0) {
+            throw new IllegalStateException("Não é possível excluir o professor porque existem disciplinas associadas a ele.");
+        }
+
         professorRepository.deleteById(id);
 
     }

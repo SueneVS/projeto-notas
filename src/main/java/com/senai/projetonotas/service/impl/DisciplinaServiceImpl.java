@@ -1,8 +1,8 @@
 package com.senai.projetonotas.service.impl;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
-import com.senai.projetonotas.exception.CampoObrigatorioException;
-import com.senai.projetonotas.exception.NotFoundException;
+import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.ProfessorRepository;
 import com.senai.projetonotas.service.DisciplinaService;
@@ -39,6 +39,10 @@ public class DisciplinaServiceImpl implements DisciplinaService {
     @Override
     public DisciplinaEntity update(Long id, DisciplinaEntity dto) {
         getEntity(id);
+        if (dto.getNome() == null || dto.getProfessor() == null  ) {
+            throw new CampoObrigatorioException("Os campos 'nome' e 'professorId' são obrigatório ao atualizar uma disciplina");
+        }
+        Prespository.findById(dto.getProfessor().getProfessorId()).orElseThrow(() -> new NotFoundException("Não encontrado professor com este id"));
         dto.setDisciplinaId(id);
         return Drepository.saveAndFlush(dto);
     }
