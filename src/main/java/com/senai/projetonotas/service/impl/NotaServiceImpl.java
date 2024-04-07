@@ -1,5 +1,7 @@
 package com.senai.projetonotas.service.impl;
 
+import com.senai.projetonotas.dto.RequestNotaDto;
+import com.senai.projetonotas.dto.ResponseNotaDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.entity.ProfessorEntity;
@@ -7,13 +9,14 @@ import com.senai.projetonotas.exception.customException.CampoObrigatorioExceptio
 import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.exception.customException.ProfessorNaoAssociadoException;
 import com.senai.projetonotas.repository.NotaRepository;
-import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.MatriculaService;
 import com.senai.projetonotas.service.NotaService;
 import com.senai.projetonotas.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -40,33 +43,52 @@ public class NotaServiceImpl implements NotaService {
   }
 
   @Override
-  public NotaEntity create(NotaEntity dto) {
+  public ResponseNotaDto create(RequestNotaDto dto) {
 
-    if (dto.getNota() == null || dto.getCoeficiente() == null)  {
-      throw new CampoObrigatorioException("Os campos 'nota' e 'coeficiente' são obrigatórios para criar uma nota");
+    if (
+            (dto.nota() < 0  && dto.nota() > 10)
+            || (dto.coeficiente() < 0 && dto.coeficiente() > 10)
+            || dto.professorId() == null
+            || dto.matriculaId() == null)  {
+      ArrayList<String> erros = new ArrayList<>();
+
+      if (dto.matriculaId() == null) {
+        erros.add("O campo 'matriculaId' é obrigatorio, informe um valor valido");
+      }
+      if (dto.professorId() == null) {
+        erros.add("O campo 'professorId' é obrigatorio, informe um valor valido");
+      }
+
+      if (dto.nota() == 0) {
+        erros.add("O campo 'nota' é obrigatorio, informe um valor valido");
+      }
+
+      if (dto.coeficiente() == 0) {
+        erros.add("O campo 'coeficiente' é obrigatorio, informe um valor valido");
+      }
+
+      throw new CampoObrigatorioException(erros.toString());
     }
 
-    MatriculaEntity matricula = matriculaService.getEntity(dto.getMatricula().getMatriculaId());
+    MatriculaEntity matricula = matriculaService.getEntity(dto.matriculaId());
 
-    ProfessorEntity professor = professorService.getEntity(dto.getProfessor().getProfessorId());
+    ProfessorEntity professor = professorService.getEntity(dto.professorId());
 
 
-    if (matricula.getDisciplina().getProfessor().getProfessorId() != dto.getProfessor().getProfessorId()) {
+    if (matricula.getDisciplina().getProfessor().getProfessorId() != dto.professorId()) {
       throw new ProfessorNaoAssociadoException("O professor não está associado à matrícula fornecida.");
     }
 
-    if(dto.getNota() > 10.0){
-      throw new RuntimeException("Nota do aluno superior a 10");
-    }
-    NotaEntity newNota = repository.saveAndFlush(dto);
-    calculaMediaDisciplina(newNota);
-    return getEntity(newNota.getNotaId());
+
+    NotaEntity newNota = repository.saveAndFlush(new NotaEntity(dto.nota(),dto.coeficiente(),professor,matricula));
+    matriculaService.updateMediaMatricula (newNota.getMatricula().getMatriculaId());
+    return new ResponseNotaDto(newNota.getNotaId(), newNota.getNota(), newNota.getCoeficiente());
   }
   @Override
   public void delete(Long id) {
     NotaEntity newNota = getEntity(id);
     repository.deleteById(id);
-    calculaMediaDisciplina(newNota);
+    matriculaService.updateMediaMatricula (newNota.getMatricula().getMatriculaId());
   }
 
   @Override
@@ -78,9 +100,20 @@ public class NotaServiceImpl implements NotaService {
     return notas;
   }
 
+
+  @Override
+  public List<ResponseNotaDto> getNotasByMatriculaIdDto(Long matriculaId) {
+    List<NotaEntity> notas = getNotasByMatriculaId(matriculaId);
+    if (notas.isEmpty()) {
+      throw new NotFoundException("Matrícula inexistente ou sem nota(s) cadastrada(s)");
+    }
+    return notas.stream()
+            .map(nota -> new ResponseNotaDto(nota.getNotaId(), nota.getNota(), nota.getCoeficiente()))
+            .collect(Collectors.toList());
+  }
+
   @Override
   public NotaEntity update(Long id, NotaEntity dto) {
-    getEntity(id);
     throw new UnsupportedOperationException("Não é permitido fazer alterações em notas já lançadas. Delete a nota, caso necessário.");
   }
 
@@ -97,28 +130,6 @@ public class NotaServiceImpl implements NotaService {
   @Override
   public List<NotaEntity> getEntities(Long id) {
     return repository.findAll();
-  }
-
-  private void calculaMediaDisciplina(NotaEntity newNota){
-    MatriculaEntity matricula = matriculaService.getEntity(newNota.getMatricula().getMatriculaId());
-
-    double coeficiente = 0.0;
-    double somaNotas = 0.0;
-
-    List<NotaEntity> notas = matricula.getNotas();
-
-    for(NotaEntity nota: notas){
-      coeficiente += nota.getCoeficiente();
-      somaNotas += nota.getNota() *nota.getCoeficiente();
-    }
-
-    if(coeficiente > 1.0){
-      throw new RuntimeException("Coeficiente maior que 1");
-    }
-
-    matricula.setMediaFinal((somaNotas));
-//    matriculaService.
-//    Mrepository.saveAndFlush(matricula);
   }
 
 }

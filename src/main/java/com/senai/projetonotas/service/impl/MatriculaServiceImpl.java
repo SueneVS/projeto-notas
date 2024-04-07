@@ -4,6 +4,7 @@ import com.senai.projetonotas.dto.*;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
+import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
 import com.senai.projetonotas.exception.customException.MatriculaComNotaCadastradaException;
 import com.senai.projetonotas.exception.customException.MatriculaDuplicadaException;
@@ -199,4 +200,21 @@ public class MatriculaServiceImpl implements MatriculaService {
         return new MediasAlunoDto(mediaMaticula, (notas / matriculas.size()));
     }
 
+
+    @Override
+    public void updateMediaMatricula(Long id) {
+        MatriculaEntity matricula = getEntity(id);
+        double coeficiente = 0.0;
+        double somaNotas = 0.0;
+        List<NotaEntity> notas = matricula.getNotas();
+        for(NotaEntity nota: notas){
+            coeficiente += nota.getCoeficiente();
+            somaNotas += nota.getNota() *nota.getCoeficiente();
+        }
+        if(coeficiente > 1.0 || coeficiente < 0.0){
+            throw new RuntimeException("Coeficiente deve estar em 0.0 e 1.0");
+        }
+        matricula.setMediaFinal((somaNotas));
+        repository.saveAndFlush(matricula);
+    }
 }

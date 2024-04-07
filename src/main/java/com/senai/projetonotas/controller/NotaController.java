@@ -1,5 +1,7 @@
 package com.senai.projetonotas.controller;
 
+import com.senai.projetonotas.dto.RequestNotaDto;
+import com.senai.projetonotas.dto.ResponseNotaDto;
 import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.NotaService;
@@ -23,35 +25,18 @@ public class NotaController {
 
   }
 
-  // Não há esses metodos de Get em Notas
-  /*
-  @GetMapping()
-  public ResponseEntity<List<NotaEntity>> getEntities() {
-    return ResponseEntity.ok(service.getEntities());
-  }
-
-  @GetMapping("{id}")
-  public ResponseEntity<NotaEntity> getEntity(@PathVariable(name = "id") Long id) {
-    return ResponseEntity.ok(service.getEntity(id));
-  }
-
-  */
   @GetMapping("/matriculas/{id}")
-  public ResponseEntity<List<NotaEntity>> getNotasByMatriculaId(@PathVariable Long id) {
-    return ResponseEntity.status(HttpStatus.OK).body(service.getNotasByMatriculaId(id));
+  public ResponseEntity<List<ResponseNotaDto>> getNotasByMatriculaId(@PathVariable Long id) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.getNotasByMatriculaIdDto(id));
   }
 
   @PostMapping
-  public ResponseEntity<NotaEntity> create(@RequestBody NotaEntity dto) {
+  public ResponseEntity<ResponseNotaDto> create(@RequestBody RequestNotaDto dto) {
     return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
   }
 
-  @PutMapping("{id}")
-  public ResponseEntity<NotaEntity> update(@PathVariable(name = "id") Long id, @RequestBody NotaEntity dto) {
-    return ResponseEntity.ok(service.update(id,dto));
-  }
 
-  @DeleteMapping("{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
     service.delete(id);
     return ResponseEntity.noContent().build();

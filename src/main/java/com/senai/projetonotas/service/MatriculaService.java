@@ -2,6 +2,7 @@ package com.senai.projetonotas.service;
 
 import com.senai.projetonotas.dto.*;
 import com.senai.projetonotas.entity.MatriculaEntity;
+import com.senai.projetonotas.entity.NotaEntity;
 
 import java.util.List;
 
@@ -25,6 +26,11 @@ public interface MatriculaService {
     public List<ResponseMatriculaDto> getEntitiesAlunoDto(Long id);
 
     public MediasAlunoDto getMediasAluno(Long id);
+
+
+    public void updateMediaMatricula(Long id);
+
+
 }
 
 
