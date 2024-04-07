@@ -32,10 +32,10 @@ public class AlunoServiceImpl implements AlunoService {
             ArrayList<String> erros = new ArrayList<>();
 
             if(dto.nome() == null){
-                erros.add("O campo 'nome' é obrigadorio");
+                erros.add("O campo 'nome' é obrigatorio");
             }
             if(dto.dataNascimento() == null){
-                erros.add("O campo 'dataNascimento' é obrigadorio");
+                erros.add("O campo 'dataNascimento' é obrigatorio");
             }
 
             throw new CampoObrigatorioException(erros.toString() );
@@ -99,7 +99,7 @@ public class AlunoServiceImpl implements AlunoService {
         AlunoEntity aluno = repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrado aluno com id: " +id));
 
         log.info("Buscando aluno por id ({}) -> Encontrado", id);
-        log.debug("Buscando aluno por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(aluno.toString()));
+//        log.debug("Buscando aluno por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(aluno.toString()));
 
         return aluno;
     }

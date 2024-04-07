@@ -1,6 +1,8 @@
 package com.senai.projetonotas.controller;
 
 import com.senai.projetonotas.dto.MediasAlunoDto;
+import com.senai.projetonotas.dto.RequestMatriculaDto;
+import com.senai.projetonotas.dto.ResponseMatriculaDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.MatriculaService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,7 @@ public class MatriculaController {
     private final MatriculaService service;
 
     @PostMapping
-    public ResponseEntity<MatriculaEntity> create(@RequestBody MatriculaEntity dto) {
+    public ResponseEntity<ResponseMatriculaDto> create(@RequestBody RequestMatriculaDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 

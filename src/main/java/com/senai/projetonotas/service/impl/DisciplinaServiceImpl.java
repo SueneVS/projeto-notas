@@ -34,10 +34,10 @@ public class DisciplinaServiceImpl implements DisciplinaService {
         ) {
             ArrayList<String> erros = new ArrayList<>();
             if (dto.nome() == null) {
-                erros.add("O campo 'nome' é obrigadorio");
+                erros.add("O campo 'nome' é obrigatorio");
             }
             if (dto.professorId() == null) {
-                erros.add("O campo 'professorId' é obrigadorio");
+                erros.add("O campo 'professorId' é obrigatorio");
             }
             throw new CampoObrigatorioException(erros.toString());
         }

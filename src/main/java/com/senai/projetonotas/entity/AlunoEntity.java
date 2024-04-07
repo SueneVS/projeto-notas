@@ -37,7 +37,7 @@ public class AlunoEntity implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dataNascimento;
 
-    @JsonIgnoreProperties("aluno")
+    @JsonIgnore
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<MatriculaEntity> matriculas;
 

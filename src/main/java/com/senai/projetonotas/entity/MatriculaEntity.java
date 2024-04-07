@@ -1,8 +1,11 @@
 package com.senai.projetonotas.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -14,7 +17,8 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "matricula")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class MatriculaEntity implements Serializable {
 
     @Id
@@ -45,5 +49,9 @@ public class MatriculaEntity implements Serializable {
     @OneToMany(mappedBy = "matricula", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<NotaEntity> notas;
 
+    public MatriculaEntity(AlunoEntity aluno,DisciplinaEntity disciplina){
+        this.aluno = aluno;
+        this.disciplina = disciplina;
+    }
 
 }

@@ -1,14 +1,12 @@
 package com.senai.projetonotas.service;
 
-import com.senai.projetonotas.dto.DtoGenericRequest;
-import com.senai.projetonotas.dto.DtoGenericResponse;
-import com.senai.projetonotas.dto.MediasAlunoDto;
+import com.senai.projetonotas.dto.*;
 import com.senai.projetonotas.entity.MatriculaEntity;
 
 import java.util.List;
 
 public interface MatriculaService {
-    public MatriculaEntity create (MatriculaEntity dto);
+    public ResponseMatriculaDto create (RequestMatriculaDto dto);
     public void delete(Long id);
     public MatriculaEntity update (Long id,MatriculaEntity dto);
     public MatriculaEntity getEntity (Long id);
