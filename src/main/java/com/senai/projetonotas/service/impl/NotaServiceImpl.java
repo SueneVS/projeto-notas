@@ -6,23 +6,39 @@ import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
 import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.exception.customException.ProfessorNaoAssociadoException;
-import com.senai.projetonotas.repository.MatriculaRepository;
 import com.senai.projetonotas.repository.NotaRepository;
-import com.senai.projetonotas.repository.ProfessorRepository;
+import com.senai.projetonotas.service.ColecaoService;
+import com.senai.projetonotas.service.MatriculaService;
 import com.senai.projetonotas.service.NotaService;
-import lombok.RequiredArgsConstructor;
+import com.senai.projetonotas.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
-@RequiredArgsConstructor
 public class NotaServiceImpl implements NotaService {
 
   private final NotaRepository repository;
-  private final MatriculaRepository Mrepository;
-  private final ProfessorRepository Prepository;
+  private  MatriculaService matriculaService;
+  private  ProfessorService professorService;
+
+  public NotaServiceImpl(NotaRepository repository) {
+    this.repository = repository;
+
+
+  }
+
+  @Override
+  public void setMatriculaService(MatriculaService matriculaService) {
+    this.matriculaService = matriculaService;
+  }
+
+  @Override
+  public void setProfessorService(ProfessorService professorService) {
+    this.professorService = professorService;
+  }
+
   @Override
   public NotaEntity create(NotaEntity dto) {
 
@@ -30,11 +46,10 @@ public class NotaServiceImpl implements NotaService {
       throw new CampoObrigatorioException("Os campos 'nota' e 'coeficiente' são obrigatórios para criar uma nota");
     }
 
-    MatriculaEntity matricula = Mrepository.findById(dto.getMatricula().getMatriculaId())
-            .orElseThrow(() -> new NotFoundException("Não encontrada matrícula com este id"));
+    MatriculaEntity matricula = matriculaService.getEntity(dto.getMatricula().getMatriculaId());
 
-    ProfessorEntity professor = Prepository.findById(dto.getProfessor().getProfessorId())
-            .orElseThrow(() -> new NotFoundException("Professor não encontrado com este id"));
+    ProfessorEntity professor = professorService.getEntity(dto.getProfessor().getProfessorId());
+
 
     if (matricula.getDisciplina().getProfessor().getProfessorId() != dto.getProfessor().getProfessorId()) {
       throw new ProfessorNaoAssociadoException("O professor não está associado à matrícula fornecida.");
@@ -85,7 +100,7 @@ public class NotaServiceImpl implements NotaService {
   }
 
   private void calculaMediaDisciplina(NotaEntity newNota){
-    MatriculaEntity matricula = Mrepository.findById(newNota.getMatricula().getMatriculaId()).orElseThrow(() -> new RuntimeException("Error"));
+    MatriculaEntity matricula = matriculaService.getEntity(newNota.getMatricula().getMatriculaId());
 
     double coeficiente = 0.0;
     double somaNotas = 0.0;
@@ -102,7 +117,8 @@ public class NotaServiceImpl implements NotaService {
     }
 
     matricula.setMediaFinal((somaNotas));
-    Mrepository.saveAndFlush(matricula);
+//    matriculaService.
+//    Mrepository.saveAndFlush(matricula);
   }
 
 }

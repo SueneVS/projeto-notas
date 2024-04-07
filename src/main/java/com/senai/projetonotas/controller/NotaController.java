@@ -1,6 +1,7 @@
 package com.senai.projetonotas.controller;
 
 import com.senai.projetonotas.entity.NotaEntity;
+import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.NotaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,11 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("notas")
 public class NotaController {
 
   private final NotaService service;
+
+  public NotaController(ColecaoService colecaoService) {
+    this.service = colecaoService.getNotaService();
+    this.service.setMatriculaService(colecaoService.getMatriculaService());
+    this.service.setProfessorService(colecaoService.getProfessorService());
+
+  }
 
   // Não há esses metodos de Get em Notas
   /*

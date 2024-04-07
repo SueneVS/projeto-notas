@@ -5,6 +5,10 @@ import com.senai.projetonotas.entity.NotaEntity;
 import java.util.List;
 
 public interface NotaService {
+    void setMatriculaService(MatriculaService matriculaService);
+
+    void setProfessorService(ProfessorService professorService);
+
     public NotaEntity create (NotaEntity dto);
     public void delete(Long id);
     public NotaEntity update (Long id,NotaEntity dto);

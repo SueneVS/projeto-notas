@@ -4,6 +4,7 @@ import com.senai.projetonotas.dto.MediasAlunoDto;
 import com.senai.projetonotas.dto.RequestMatriculaDto;
 import com.senai.projetonotas.dto.ResponseMatriculaDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
+import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.MatriculaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,11 +15,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("matriculas")
-@RequiredArgsConstructor
 public class MatriculaController {
 
 
     private final MatriculaService service;
+
+    public MatriculaController(ColecaoService colecaoService) {
+        this.service = colecaoService.getMatriculaService();
+        this.service.setAlunoService(colecaoService.getAlunoService());
+        this.service.setDisciplinaService(colecaoService.getDisciplinaService());
+    }
 
     @PostMapping
     public ResponseEntity<ResponseMatriculaDto> create(@RequestBody RequestMatriculaDto dto) {
@@ -38,8 +44,8 @@ public class MatriculaController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<MatriculaEntity> getEntity(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(service.getEntity(id));
+    public ResponseEntity<ResponseMatriculaDto> getEntity(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(service.getEntityDto(id));
     }
 
 

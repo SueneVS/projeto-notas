@@ -8,6 +8,7 @@ import com.senai.projetonotas.exception.customException.CampoObrigatorioExceptio
 import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.AlunoRepository;
 import com.senai.projetonotas.service.AlunoService;
+import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +21,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class AlunoServiceImpl implements AlunoService {
 
     private final AlunoRepository repository;
+
+    public AlunoServiceImpl(AlunoRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public ResponseAlunoDto create(CreateAlunoDto dto) {
 

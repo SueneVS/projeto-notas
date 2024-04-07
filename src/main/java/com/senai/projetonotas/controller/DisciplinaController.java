@@ -4,6 +4,7 @@ import com.senai.projetonotas.dto.RequestDisciplinaDto;
 import com.senai.projetonotas.dto.ResponseDisciplinaDto;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
+import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("disciplinas")
-@RequiredArgsConstructor
 public class DisciplinaController {
 
     private final DisciplinaService service;
+
+    public DisciplinaController(ColecaoService colecaoService) {
+        this.service = colecaoService.getDisciplinaService();
+        this.service.setProfessorService(colecaoService.getProfessorService());
+    }
 
     @PostMapping
     public ResponseEntity<ResponseDisciplinaDto> create(@RequestBody RequestDisciplinaDto dto) {

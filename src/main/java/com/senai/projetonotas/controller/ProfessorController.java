@@ -4,6 +4,8 @@ package com.senai.projetonotas.controller;
 import com.senai.projetonotas.dto.RequestProfessorDto;
 import com.senai.projetonotas.dto.ResponseProfessorDto;
 import com.senai.projetonotas.entity.ProfessorEntity;
+import com.senai.projetonotas.service.ColecaoService;
+import com.senai.projetonotas.service.ProfessorService;
 import com.senai.projetonotas.service.impl.ProfessorServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("professores")
-@RequiredArgsConstructor
 public class ProfessorController {
 
-    private final ProfessorServiceImpl service;
+    private final ProfessorService service;
+
+    public ProfessorController(ColecaoService colecaoService) {
+        this.service = colecaoService.getProfessorService();
+    }
 
     @GetMapping
     public ResponseEntity<List<ResponseProfessorDto>> getEntities(){

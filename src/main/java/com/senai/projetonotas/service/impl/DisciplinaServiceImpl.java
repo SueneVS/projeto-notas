@@ -9,6 +9,7 @@ import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
 import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.DisciplinaRepository;
+import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,20 @@ import java.util.stream.Collectors;
 
 
 @Service
-@RequiredArgsConstructor
 public class DisciplinaServiceImpl implements DisciplinaService {
 
     private final DisciplinaRepository repository;
-    private final ProfessorService professorService;
+    private ProfessorService professorService;
+
+    public DisciplinaServiceImpl(DisciplinaRepository repository) {
+        this.repository = repository;
+
+    }
+
+    @Override
+    public void setProfessorService(ProfessorService professorService) {
+        this.professorService = professorService;
+    }
 
     @Override
     public ResponseDisciplinaDto create(RequestDisciplinaDto dto) {

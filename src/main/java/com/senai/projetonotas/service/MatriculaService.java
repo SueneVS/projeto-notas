@@ -6,10 +6,15 @@ import com.senai.projetonotas.entity.MatriculaEntity;
 import java.util.List;
 
 public interface MatriculaService {
+    void setDisciplinaService(DisciplinaService disciplinaService);
+
+    void setAlunoService(AlunoService alunoService);
+
     public ResponseMatriculaDto create (RequestMatriculaDto dto);
     public void delete(Long id);
     public MatriculaEntity update (Long id,MatriculaEntity dto);
     public MatriculaEntity getEntity (Long id);
+    public ResponseMatriculaDto getEntityDto (Long id);
     public List<MatriculaEntity> getEntities ();
     public List<MatriculaEntity> getEntities(Long id);
     public List<MatriculaEntity> getEntitiesDisciplina(Long id);

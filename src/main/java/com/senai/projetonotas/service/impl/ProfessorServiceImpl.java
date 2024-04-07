@@ -17,11 +17,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ProfessorServiceImpl implements ProfessorService {
 
-
     private final ProfessorRepository professorRepository;
+
+    public ProfessorServiceImpl(ProfessorRepository professorRepository) {
+        this.professorRepository = professorRepository;
+    }
 
     @Override
     public ResponseProfessorDto create(RequestProfessorDto dto) {

@@ -10,6 +10,9 @@ import com.senai.projetonotas.entity.MatriculaEntity;
 import java.util.List;
 
 public interface DisciplinaService {
+
+
+    public void setProfessorService(ProfessorService professorService);
     public ResponseDisciplinaDto create(RequestDisciplinaDto dto);
     public void delete(Long id);
     public ResponseDisciplinaDto update (Long id, RequestDisciplinaDto dto);

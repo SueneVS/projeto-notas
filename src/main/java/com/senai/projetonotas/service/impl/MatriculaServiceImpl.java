@@ -11,25 +11,35 @@ import com.senai.projetonotas.exception.customException.CampoObrigatorioExceptio
 import com.senai.projetonotas.exception.customException.MatriculaComNotaCadastradaException;
 import com.senai.projetonotas.exception.customException.MatriculaDuplicadaException;
 import com.senai.projetonotas.exception.customException.NotFoundException;
-import com.senai.projetonotas.repository.AlunoRepository;
-import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.MatriculaRepository;
 import com.senai.projetonotas.service.AlunoService;
 import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.MatriculaService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MatriculaServiceImpl implements MatriculaService {
 
     private final MatriculaRepository repository;
-    private final DisciplinaService disciplinaService;
-    private final AlunoService alunoService;
+    private  DisciplinaService disciplinaService;
+    private  AlunoService alunoService;
+
+    public MatriculaServiceImpl(MatriculaRepository repository) {
+        this.repository = repository;
+    }
+
+   @Override
+    public void setDisciplinaService(DisciplinaService disciplinaService) {
+        this.disciplinaService = disciplinaService;
+    }
+
+    @Override
+    public void setAlunoService(AlunoService alunoService) {
+        this.alunoService = alunoService;
+    }
 
     @Override
     public ResponseMatriculaDto create(RequestMatriculaDto dto) {
@@ -101,6 +111,18 @@ public class MatriculaServiceImpl implements MatriculaService {
     }
 
     @Override
+    public ResponseMatriculaDto getEntityDto (Long id){
+        MatriculaEntity matricula = getEntity(id);
+        return new ResponseMatriculaDto(matricula.getMatriculaId(),
+                matricula.getDisciplina().getDisciplinaId(),
+                matricula.getDisciplina().getNome(),
+                matricula.getAluno().getAlunoId(),
+                matricula.getAluno().getNome()
+        );
+
+    }
+
+    @Override
     public List<MatriculaEntity> getEntities() {
         return repository.findAll();
     }
@@ -148,4 +170,5 @@ public class MatriculaServiceImpl implements MatriculaService {
         }
         return new MediasAlunoDto(mediaMaticula, (notas / matriculas.size()));
     }
+
 }

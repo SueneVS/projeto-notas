@@ -5,6 +5,7 @@ import com.senai.projetonotas.dto.ResponseAlunoDto;
 import com.senai.projetonotas.dto.UpdateAlunoDto;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.service.AlunoService;
+import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +17,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("alunos")
-@RequiredArgsConstructor
 @Slf4j
 public class AlunoController {
 
   private final AlunoService service;
+
+  public AlunoController(AlunoService service) {
+    this.service = service;
+  }
 
   @GetMapping()
   public ResponseEntity<List<ResponseAlunoDto>> getEntities() {
