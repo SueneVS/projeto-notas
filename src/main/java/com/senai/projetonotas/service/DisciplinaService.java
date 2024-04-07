@@ -16,6 +16,7 @@ public interface DisciplinaService {
     public DisciplinaEntity getEntity (Long id);
     public ResponseDisciplinaDto getEntityDto(Long id);
     public List<DisciplinaEntity> getEntities ();
+    public List<ResponseDisciplinaDto> getEntitiesDto ();
     public List<MatriculaEntity> getEntitiesProfessor(Long id);
 
 }

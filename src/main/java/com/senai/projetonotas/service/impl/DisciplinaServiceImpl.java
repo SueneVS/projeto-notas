@@ -1,6 +1,7 @@
 package com.senai.projetonotas.service.impl;
 
 import com.senai.projetonotas.dto.RequestDisciplinaDto;
+import com.senai.projetonotas.dto.ResponseAlunoDto;
 import com.senai.projetonotas.dto.ResponseDisciplinaDto;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -98,6 +100,19 @@ public class DisciplinaServiceImpl implements DisciplinaService {
         return repository.findAll();
     }
 
+    @Override
+    public List<ResponseDisciplinaDto> getEntitiesDto (){
+        List<DisciplinaEntity> disciplinas = getEntities();
+
+        return disciplinas.stream()
+                .map(disciplina -> new ResponseDisciplinaDto(
+                        disciplina.getDisciplinaId(),
+                        disciplina.getNome(),
+                        disciplina.getProfessor().getProfessorId(),
+                        disciplina.getProfessor().getNome()
+                ))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<MatriculaEntity> getEntitiesProfessor(Long id) {

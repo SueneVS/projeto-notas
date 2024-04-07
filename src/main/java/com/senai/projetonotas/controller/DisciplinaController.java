@@ -36,8 +36,8 @@ public class DisciplinaController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<DisciplinaEntity>> getEntities() {
-        return ResponseEntity.ok(service.getEntities());
+    public ResponseEntity<List<ResponseDisciplinaDto>> getEntities() {
+        return ResponseEntity.ok(service.getEntitiesDto());
     }
 
     @GetMapping({"/{id}"})
