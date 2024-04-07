@@ -1,7 +1,6 @@
 package com.senai.projetonotas.controller;
 
 import com.senai.projetonotas.dto.*;
-import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.MatriculaService;
 import com.senai.projetonotas.util.JsonUtil;

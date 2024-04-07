@@ -60,7 +60,6 @@ public class ProfessorController {
         log.info("POST /professores -> Cadastrado");
 
         log.info("POST /professores -> 201 CREATED");
-        log.debug("POST /professores -> Response Body:\n{}\n", JsonUtil.objetoParaJson(professor.toString()));
         return ResponseEntity.status(HttpStatus.CREATED).body(NovoProfessordto);
     }
 
