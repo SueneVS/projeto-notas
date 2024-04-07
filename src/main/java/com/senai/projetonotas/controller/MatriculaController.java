@@ -1,12 +1,11 @@
 package com.senai.projetonotas.controller;
 
-import com.senai.projetonotas.dto.MediasAlunoDto;
+import com.senai.projetonotas.dto.MediaAlunoDto;
 import com.senai.projetonotas.dto.RequestMatriculaDto;
 import com.senai.projetonotas.dto.ResponseMatriculaDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.MatriculaService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,9 +59,9 @@ public class MatriculaController {
     }
 
 
-    @GetMapping("/aluno/{id}/media")
-    public ResponseEntity<MediasAlunoDto> getMediasAluno(@PathVariable(name = "id")Long id) {
-        return ResponseEntity.ok(service.getMediasAluno(id));
+    @GetMapping("/alunos/{id}/media")
+    public ResponseEntity<MediaAlunoDto> getMediasAluno(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getMediaAluno(id));
     }
 
 }

@@ -6,6 +6,7 @@ import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.CoeficienteAcimaDoLimiteException;
 import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.exception.customException.ProfessorNaoAssociadoException;
 import com.senai.projetonotas.repository.NotaRepository;
@@ -79,9 +80,13 @@ public class NotaServiceImpl implements NotaService {
       throw new ProfessorNaoAssociadoException("O professor não está associado à matrícula fornecida.");
     }
 
+    if ((matricula.somaCoeficiente() + dto.coeficiente()) > 1.0) {
+      throw new CoeficienteAcimaDoLimiteException("A Soma do Coeficiente de "+(matricula.somaCoeficiente() + dto.coeficiente())+" passou se do limite permitido .");
+    }
+
 
     NotaEntity newNota = repository.saveAndFlush(new NotaEntity(dto.nota(),dto.coeficiente(),professor,matricula));
-    matriculaService.updateMediaMatricula (newNota.getMatricula().getMatriculaId());
+    matriculaService.updateMediaMatricula (matricula.getMatriculaId());
     return new ResponseNotaDto(newNota.getNotaId(), newNota.getNota(), newNota.getCoeficiente());
   }
   @Override

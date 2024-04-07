@@ -54,4 +54,12 @@ public class MatriculaEntity implements Serializable {
         this.disciplina = disciplina;
     }
 
+    public double somaCoeficiente(){
+        double coeficiente = 0.0;
+        for(NotaEntity nota: notas){
+            coeficiente += nota.getCoeficiente();
+        }
+        return  coeficiente;
+    }
+
 }

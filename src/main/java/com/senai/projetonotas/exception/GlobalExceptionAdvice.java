@@ -52,6 +52,7 @@ public class GlobalExceptionAdvice {
                 .build();
         return ResponseEntity.status(409).body(erroDto);
     }
+
     @ExceptionHandler(ProfessorNaoAssociadoException.class)
     public ResponseEntity<?> handle(ProfessorNaoAssociadoException e) {
         log.error("STATUS: 400 -> Professor não encontrado -> {}", e.getMessage());
@@ -61,6 +62,7 @@ public class GlobalExceptionAdvice {
                 .build();
         return ResponseEntity.status(400).body(erroDto);
     }
+
     @ExceptionHandler(MatriculaComNotaCadastradaException.class)
     public ResponseEntity<?> handle(MatriculaComNotaCadastradaException e) {
         log.error("STATUS: 400 -> A matricula tem nota cadastrada -> {}", e.getMessage());
@@ -70,6 +72,7 @@ public class GlobalExceptionAdvice {
                 .build();
         return ResponseEntity.status(400).body(erroDto);
     }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<?> handler(DataIntegrityViolationException e) {
         log.error("STATUS: 400 -> Violação de integridade -> {}", e.getMessage());
@@ -79,6 +82,7 @@ public class GlobalExceptionAdvice {
                 .build();
         return ResponseEntity.status(400).body(erroDto);
     }
+
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<?> handler(IllegalStateException e) {
         log.error("STATUS: 409 -> Erro ao gerar a solicitação -> {}", e.getMessage());
@@ -88,6 +92,7 @@ public class GlobalExceptionAdvice {
                 .build();
         return ResponseEntity.status(409).body(erroDto);
     }
+
     @ExceptionHandler(UnsupportedOperationException.class)
     public ResponseEntity<?> handler(UnsupportedOperationException e) {
         log.error("STATUS: 403 -> Operação não aceita -> {}", e.getMessage());
@@ -98,4 +103,14 @@ public class GlobalExceptionAdvice {
         return ResponseEntity.status(403).body(erroDto);
     }
 
+    @ExceptionHandler(CoeficienteAcimaDoLimiteException.class)
+    public ResponseEntity<?> handler(CoeficienteAcimaDoLimiteException e) {
+        log.error("STATUS: 400 -> Coeficiente acima do limite -> {}", e.getMessage());
+        ErroDto erroDto = ErroDto.builder()
+                .codigo("400")
+                .mensagem(e.getMessage())
+                .build();
+
+        return ResponseEntity.status(400).body(erroDto);
+    }
 }
