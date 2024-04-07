@@ -1,12 +1,15 @@
 package com.senai.projetonotas.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,6 +18,8 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "aluno")
+@AllArgsConstructor
+@NoArgsConstructor
 public class AlunoEntity implements Serializable {
 
     @Id
@@ -32,7 +37,15 @@ public class AlunoEntity implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dataNascimento;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<MatriculaEntity> matriculas;
+
+    public AlunoEntity(String nome, String dataNascimento){
+        this.nome = nome;
+        this.dataNascimento = LocalDate.parse(dataNascimento);
+    }
+
+
 
 }

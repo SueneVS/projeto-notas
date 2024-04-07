@@ -1,30 +1,32 @@
 package com.senai.projetonotas.controller;
 
-import com.senai.projetonotas.dto.DtoGenericRequest;
-import com.senai.projetonotas.dto.DtoGenericResponse;
-import com.senai.projetonotas.dto.MediasAlunoDto;
+import com.senai.projetonotas.dto.MediaAlunoDto;
+import com.senai.projetonotas.dto.RequestMatriculaDto;
+import com.senai.projetonotas.dto.ResponseMatriculaDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
+import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.MatriculaService;
-import lombok.Builder;
-import lombok.Generated;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("matriculas")
-@RequiredArgsConstructor
 public class MatriculaController {
 
 
     private final MatriculaService service;
 
+    public MatriculaController(ColecaoService colecaoService) {
+        this.service = colecaoService.getMatriculaService();
+        this.service.setAlunoService(colecaoService.getAlunoService());
+        this.service.setDisciplinaService(colecaoService.getDisciplinaService());
+    }
+
     @PostMapping
-    public ResponseEntity<MatriculaEntity> create(@RequestBody MatriculaEntity dto) {
+    public ResponseEntity<ResponseMatriculaDto> create(@RequestBody RequestMatriculaDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
@@ -34,15 +36,9 @@ public class MatriculaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<MatriculaEntity> update(@PathVariable(name = "id") Long id,
-                                                  @RequestBody MatriculaEntity dto) {
-        return ResponseEntity.ok(service.update(id,dto));
-    }
-
     @GetMapping("{id}")
-    public ResponseEntity<MatriculaEntity> getEntity(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(service.getEntity(id));
+    public ResponseEntity<ResponseMatriculaDto> getEntity(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(service.getEntityDto(id));
     }
 
 
@@ -50,20 +46,22 @@ public class MatriculaController {
     public ResponseEntity<List<MatriculaEntity>> getEntities() {
         return ResponseEntity.ok(service.getEntities());
     }
-    @GetMapping("/aluno/{id}")
-    public ResponseEntity<List<MatriculaEntity>> getEntitiesAluno(@PathVariable(name = "id")Long id) {
-        return ResponseEntity.ok(service.getEntitiesAluno(id));
+
+
+    @GetMapping("/alunos/{id}")
+    public ResponseEntity<List<ResponseMatriculaDto>> getEntitiesAluno(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getEntitiesAlunoDto(id));
     }
 
-    @GetMapping("/disciplina/{id}")
-    public ResponseEntity<List<MatriculaEntity>> getEntitiesDisciplina(@PathVariable(name = "id")Long id) {
-        return ResponseEntity.ok(service.getEntitiesDisciplina(id));
+    @GetMapping("/disciplinas/{id}")
+    public ResponseEntity<List<ResponseMatriculaDto>> getEntitiesDisciplina(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getEntitiesDisciplinaDto(id));
     }
 
 
-    @GetMapping("/medias/aluno/{id}")
-    public ResponseEntity<MediasAlunoDto> getMediasAluno(@PathVariable(name = "id")Long id) {
-        return ResponseEntity.ok(service.getMediasAluno(id));
+    @GetMapping("/alunos/{id}/media")
+    public ResponseEntity<MediaAlunoDto> getMediasAluno(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getMediaAluno(id));
     }
 
 }
