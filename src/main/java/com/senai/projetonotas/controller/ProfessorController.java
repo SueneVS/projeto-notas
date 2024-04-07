@@ -1,6 +1,8 @@
 package com.senai.projetonotas.controller;
 
 
+import com.senai.projetonotas.dto.RequestProfessorDto;
+import com.senai.projetonotas.dto.ResponseProfessorDto;
 import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.service.impl.ProfessorServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -18,26 +20,26 @@ public class ProfessorController {
     private final ProfessorServiceImpl service;
 
     @GetMapping
-    public ResponseEntity<List<ProfessorEntity>> getEntities(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getEntities());
+    public ResponseEntity<List<ResponseProfessorDto>> getEntities(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getEntitiesDto());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<ProfessorEntity> getEntity(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getEntity(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseProfessorDto> getEntity(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getEntityDto(id));
     }
 
     @PostMapping
-    public ResponseEntity<ProfessorEntity> create(@RequestBody ProfessorEntity professor){
+    public ResponseEntity<ResponseProfessorDto> create(@RequestBody RequestProfessorDto professor){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(professor));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<ProfessorEntity> update(@RequestBody ProfessorEntity professor, @PathVariable Long id){
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseProfessorDto> update(@RequestBody RequestProfessorDto professor, @PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, professor));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.getEntity(id);
         service.delete(id);
