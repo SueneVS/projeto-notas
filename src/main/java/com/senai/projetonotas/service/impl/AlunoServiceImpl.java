@@ -69,7 +69,7 @@ public class AlunoServiceImpl implements AlunoService {
             aluno.setNome(dto.nome());
         }
 
-        if (dto.dataNascimento() != null && aluno.getDataNascimento().isEqual(LocalDate.parse(dto.dataNascimento()))  ) {
+        if (dto.dataNascimento() != null && !aluno.getDataNascimento().isEqual(LocalDate.parse(dto.dataNascimento()))  ) {
             aluno.setDataNascimento(LocalDate.parse(dto.dataNascimento()));
         }
         aluno.setAlunoId(id);

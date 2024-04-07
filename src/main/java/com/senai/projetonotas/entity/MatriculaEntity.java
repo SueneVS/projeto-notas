@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -57,6 +58,14 @@ public class MatriculaEntity implements Serializable {
             coeficiente += nota.getCoeficiente();
         }
         return  coeficiente;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        // Define a data atual se a data de empréstimo for nula
+        if (dataMatricula == null) {
+            dataMatricula = LocalDate.now().atStartOfDay();
+        }
     }
 
 }

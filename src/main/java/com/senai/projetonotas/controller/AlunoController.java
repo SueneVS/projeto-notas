@@ -71,7 +71,7 @@ public class AlunoController {
 
     log.info("PUT /alunos/{} -> 200 OK", id);
     log.debug("PUT /alunos/{} -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(aluno.toString()));
-    return ResponseEntity.ok(service.update(id,dto));
+    return ResponseEntity.ok(aluno);
   }
 
   @DeleteMapping("/{id}")
@@ -82,7 +82,7 @@ public class AlunoController {
     log.info("DELETE /alunos/{} -> Excluído", id);
 
     log.info("DELETE /alunos/{} -> 204 NO CONTENT", id);
-    service.delete(id);
+
     return ResponseEntity.noContent().build();
   }
 }

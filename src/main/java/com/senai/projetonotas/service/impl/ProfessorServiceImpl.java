@@ -32,7 +32,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
         log.info("Criando professor-> Salvo com sucesso");
         ProfessorEntity professor = professorRepository.save(new ProfessorEntity(dto.nome()));
-        log.debug("Criando disciplina -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(professor.toString()));
+        log.debug("Criando professor -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(professor.toString()));
         log.info("transformando a professor em DTO");
         return new ResponseProfessorDto(professor.getProfessorId(), professor.getNome());
     }

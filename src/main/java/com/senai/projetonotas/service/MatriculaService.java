@@ -27,9 +27,7 @@ public interface MatriculaService {
 
     public MediaAlunoDto getMediaAluno(Long id);
 
-
     public void updateMediaMatricula(Long id);
-
 
 }
 

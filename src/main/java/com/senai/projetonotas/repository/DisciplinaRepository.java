@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface DisciplinaRepository extends JpaRepository<DisciplinaEntity, Long> {
-    List<MatriculaEntity> findAllByProfessorProfessorId(Long id);
+    List<DisciplinaEntity> findAllByProfessorProfessorId(Long id);
 
     long countByProfessorProfessorId(Long id);
 }

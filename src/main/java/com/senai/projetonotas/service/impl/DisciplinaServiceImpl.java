@@ -148,9 +148,24 @@ public class DisciplinaServiceImpl implements DisciplinaService {
     }
 
     @Override
-    public List<MatriculaEntity> getEntitiesProfessor(Long id) {
+    public List<DisciplinaEntity> getEntitiesProfessor(Long id) {
         log.info("Buscando todas as disciplinas do professor com id {}", id);
         return repository.findAllByProfessorProfessorId(id);
+    }
+
+    @Override
+    public List<ResponseDisciplinaDto> getEntitiesProfessordto(Long id) {
+       List<DisciplinaEntity> disciplinas = getEntitiesProfessor(id);
+
+        log.info("Transformando as disciplinas em dto");
+        return disciplinas.stream()
+                .map(disciplina -> new ResponseDisciplinaDto(
+                        disciplina.getDisciplinaId(),
+                        disciplina.getNome(),
+                        disciplina.getProfessor().getProfessorId(),
+                        disciplina.getProfessor().getNome()
+                ))
+                .collect(Collectors.toList());
     }
 }
 
