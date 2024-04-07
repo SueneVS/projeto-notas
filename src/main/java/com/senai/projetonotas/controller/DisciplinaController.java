@@ -1,5 +1,7 @@
 package com.senai.projetonotas.controller;
 
+import com.senai.projetonotas.dto.RequestDisciplinaDto;
+import com.senai.projetonotas.dto.ResponseDisciplinaDto;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.DisciplinaService;
@@ -18,17 +20,17 @@ public class DisciplinaController {
     private final DisciplinaService service;
 
     @PostMapping
-    public ResponseEntity<DisciplinaEntity> create(@RequestBody DisciplinaEntity dto) {
+    public ResponseEntity<ResponseDisciplinaDto> create(@RequestBody RequestDisciplinaDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<DisciplinaEntity> update(@PathVariable(name = "id") Long id, @RequestBody DisciplinaEntity dto) {
         return ResponseEntity.ok(service.update(id,dto));
     }
@@ -43,7 +45,7 @@ public class DisciplinaController {
         return ResponseEntity.ok(service.getEntity(id));
     }
 
-    @GetMapping("/professor/{id}")
+    @GetMapping("/professores/{id}")
     public ResponseEntity<List<MatriculaEntity>> getEntitiesProfessor(@PathVariable(name = "id")Long id) {
         return ResponseEntity.ok(service.getEntitiesProfessor(id));
     }

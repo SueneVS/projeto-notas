@@ -2,7 +2,9 @@ package com.senai.projetonotas.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "disciplina")
+@AllArgsConstructor
+@NoArgsConstructor
 public class DisciplinaEntity implements Serializable {
 
     @Id
@@ -29,4 +33,9 @@ public class DisciplinaEntity implements Serializable {
     @JsonIgnoreProperties("disciplina")
     @OneToMany(mappedBy = "disciplina", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<MatriculaEntity> matriculas;
+
+    public DisciplinaEntity(String nome, ProfessorEntity professor){
+        this.nome = nome;
+        this.professor = professor;
+    }
 }
