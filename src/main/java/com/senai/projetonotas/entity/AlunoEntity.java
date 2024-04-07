@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "aluno")
+@AllArgsConstructor
 public class AlunoEntity implements Serializable {
 
     @Id
@@ -34,5 +36,12 @@ public class AlunoEntity implements Serializable {
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<MatriculaEntity> matriculas;
+
+    public AlunoEntity(String nome, String dataNascimento){
+        this.nome = nome;
+        this.dataNascimento = LocalDate.parse(dataNascimento);
+    }
+
+
 
 }

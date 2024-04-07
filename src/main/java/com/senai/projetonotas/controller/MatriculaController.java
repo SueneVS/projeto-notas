@@ -1,18 +1,13 @@
 package com.senai.projetonotas.controller;
 
-import com.senai.projetonotas.dto.DtoGenericRequest;
-import com.senai.projetonotas.dto.DtoGenericResponse;
 import com.senai.projetonotas.dto.MediasAlunoDto;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.MatriculaService;
-import lombok.Builder;
-import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

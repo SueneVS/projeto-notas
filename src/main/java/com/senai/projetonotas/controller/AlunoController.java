@@ -1,5 +1,7 @@
 package com.senai.projetonotas.controller;
 
+import com.senai.projetonotas.dto.CreateAlunoDto;
+import com.senai.projetonotas.dto.ResponseNovoAlunoDto;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.service.AlunoService;
 import com.senai.projetonotas.util.JsonUtil;
@@ -46,16 +48,16 @@ public class AlunoController {
   }
 
   @PostMapping
-  public ResponseEntity<AlunoEntity> create(@RequestBody AlunoEntity dto) {
+  public ResponseEntity<ResponseNovoAlunoDto> create(@RequestBody CreateAlunoDto dto) {
     log.info("POST /alunos");
 
-    AlunoEntity aluno = service.create(dto);
+    ResponseNovoAlunoDto NovoAlunodto = service.create(dto);
     log.info("POST /alunos -> Cadastrado");
 
     log.info("POST /alunos -> 201 CREATED");
-    log.debug("POST /alunos -> Response Body:\n{}\n", JsonUtil.objetoParaJson(aluno));
+    log.debug("POST /alunos -> Response Body:\n{}\n", JsonUtil.objetoParaJson(dto));
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
+    return ResponseEntity.status(HttpStatus.CREATED).body(NovoAlunodto);
   }
 
   @PutMapping("{id}")

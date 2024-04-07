@@ -1,6 +1,8 @@
 package com.senai.projetonotas.service.impl;
 
 import ch.qos.logback.core.joran.spi.ElementPath;
+import com.senai.projetonotas.dto.CreateAlunoDto;
+import com.senai.projetonotas.dto.ResponseNovoAlunoDto;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
 import com.senai.projetonotas.exception.customException.NotFoundException;
@@ -21,16 +23,16 @@ public class AlunoServiceImpl implements AlunoService {
 
     private final AlunoRepository repository;
     @Override
-    public AlunoEntity create(AlunoEntity dto) {
-        log.info("Criando aluno -> Salvar: \n{}\n", JsonUtil.objetoParaJson(dto));
-        AlunoEntity aluno = repository.save(dto);
+    public ResponseNovoAlunoDto create(CreateAlunoDto dto) {
+        AlunoEntity aluno = new AlunoEntity(dto.nome(), dto.dataNascimento());
 
-        if (dto.getNome() == null || dto.getDataNascimento() == null ) {
-            throw new CampoObrigatorioException("Os campos 'nome' e 'dataNascimento' são obrigatórios para criar um aluno");
-        }
+        log.info("Criando aluno -> Salvar: \n{}\n", JsonUtil.objetoParaJson(dto));
+        aluno = repository.save(aluno);
+
         log.info("Criando aluno-> Salvo com sucesso");
         log.debug("Criando aluno -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(aluno));
-        return repository.save(dto);
+
+        return  new ResponseNovoAlunoDto(aluno.getAlunoId(),aluno.getNome(),aluno.getDataNascimento());
     }
 
     @Override
