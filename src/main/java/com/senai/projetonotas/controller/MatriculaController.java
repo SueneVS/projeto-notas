@@ -37,12 +37,6 @@ public class MatriculaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<MatriculaEntity> update(@PathVariable(name = "id") Long id,
-                                                  @RequestBody MatriculaEntity dto) {
-        return ResponseEntity.ok(service.update(id,dto));
-    }
-
     @GetMapping("{id}")
     public ResponseEntity<ResponseMatriculaDto> getEntity(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(service.getEntityDto(id));
@@ -53,18 +47,20 @@ public class MatriculaController {
     public ResponseEntity<List<MatriculaEntity>> getEntities() {
         return ResponseEntity.ok(service.getEntities());
     }
-    @GetMapping("/aluno/{id}")
-    public ResponseEntity<List<MatriculaEntity>> getEntitiesAluno(@PathVariable(name = "id")Long id) {
-        return ResponseEntity.ok(service.getEntitiesAluno(id));
+
+
+    @GetMapping("/alunos/{id}")
+    public ResponseEntity<List<ResponseMatriculaDto>> getEntitiesAluno(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getEntitiesAlunoDto(id));
     }
 
-    @GetMapping("/disciplina/{id}")
-    public ResponseEntity<List<MatriculaEntity>> getEntitiesDisciplina(@PathVariable(name = "id")Long id) {
-        return ResponseEntity.ok(service.getEntitiesDisciplina(id));
+    @GetMapping("/disciplinas/{id}")
+    public ResponseEntity<List<ResponseMatriculaDto>> getEntitiesDisciplina(@PathVariable(name = "id")Long id) {
+        return ResponseEntity.ok(service.getEntitiesDisciplinaDto(id));
     }
 
 
-    @GetMapping("/medias/aluno/{id}")
+    @GetMapping("/aluno/{id}/media")
     public ResponseEntity<MediasAlunoDto> getMediasAluno(@PathVariable(name = "id")Long id) {
         return ResponseEntity.ok(service.getMediasAluno(id));
     }

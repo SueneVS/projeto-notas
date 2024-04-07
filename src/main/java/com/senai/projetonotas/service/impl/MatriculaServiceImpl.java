@@ -1,9 +1,6 @@
 package com.senai.projetonotas.service.impl;
 
-import com.senai.projetonotas.dto.MediaMatriculaDto;
-import com.senai.projetonotas.dto.MediasAlunoDto;
-import com.senai.projetonotas.dto.RequestMatriculaDto;
-import com.senai.projetonotas.dto.ResponseMatriculaDto;
+import com.senai.projetonotas.dto.*;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
@@ -19,19 +16,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MatriculaServiceImpl implements MatriculaService {
 
     private final MatriculaRepository repository;
-    private  DisciplinaService disciplinaService;
-    private  AlunoService alunoService;
+    private DisciplinaService disciplinaService;
+    private AlunoService alunoService;
 
     public MatriculaServiceImpl(MatriculaRepository repository) {
         this.repository = repository;
     }
 
-   @Override
+    @Override
     public void setDisciplinaService(DisciplinaService disciplinaService) {
         this.disciplinaService = disciplinaService;
     }
@@ -79,13 +77,13 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     @Override
     public void delete(Long id) {
-        getEntity(id);
+        MatriculaEntity matricula = getEntity(id);
 
-        if (getEntity(id).getNotas().size() > 0) {
+        if (!matricula.getNotas().isEmpty()) {
             throw new MatriculaComNotaCadastradaException("Matrícula não pode ser deletada, há nota(s) cadastrada(s)");
         }
 
-        repository.deleteById(id);
+        repository.delete(matricula);
     }
 
     @Override
@@ -111,7 +109,7 @@ public class MatriculaServiceImpl implements MatriculaService {
     }
 
     @Override
-    public ResponseMatriculaDto getEntityDto (Long id){
+    public ResponseMatriculaDto getEntityDto(Long id) {
         MatriculaEntity matricula = getEntity(id);
         return new ResponseMatriculaDto(matricula.getMatriculaId(),
                 matricula.getDisciplina().getDisciplinaId(),
@@ -142,12 +140,42 @@ public class MatriculaServiceImpl implements MatriculaService {
     }
 
     @Override
+    public List<ResponseMatriculaDto> getEntitiesDisciplinaDto(Long id) {
+        List<MatriculaEntity> matriculas = getEntitiesDisciplina(id);
+
+        return matriculas.stream()
+                .map(matricula -> new ResponseMatriculaDto(
+                        matricula.getMatriculaId(),
+                        matricula.getDisciplina().getDisciplinaId(),
+                        matricula.getDisciplina().getNome(),
+                        matricula.getAluno().getAlunoId(),
+                        matricula.getAluno().getNome()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<MatriculaEntity> getEntitiesAluno(Long id) {
         List<MatriculaEntity> matriculas = repository.findAllByAlunoAlunoId(id);
         if (matriculas.isEmpty()) {
             throw new NotFoundException("Aluno inexistente ou não matriculado a nenhuma disciplina");
         }
         return matriculas;
+    }
+
+    @Override
+    public List<ResponseMatriculaDto> getEntitiesAlunoDto(Long id) {
+        List<MatriculaEntity> matriculas = getEntitiesAluno(id);
+
+        return matriculas.stream()
+                .map(matricula -> new ResponseMatriculaDto(
+                        matricula.getMatriculaId(),
+                        matricula.getDisciplina().getDisciplinaId(),
+                        matricula.getDisciplina().getNome(),
+                        matricula.getAluno().getAlunoId(),
+                        matricula.getAluno().getNome()
+                ))
+                .collect(Collectors.toList());
     }
 
     @Override

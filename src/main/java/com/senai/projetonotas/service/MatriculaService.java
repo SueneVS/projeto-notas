@@ -18,7 +18,11 @@ public interface MatriculaService {
     public List<MatriculaEntity> getEntities ();
     public List<MatriculaEntity> getEntities(Long id);
     public List<MatriculaEntity> getEntitiesDisciplina(Long id);
+
+    List<ResponseMatriculaDto> getEntitiesDisciplinaDto(Long id);
+
     public List<MatriculaEntity> getEntitiesAluno(Long id);
+    public List<ResponseMatriculaDto> getEntitiesAlunoDto(Long id);
 
     public MediasAlunoDto getMediasAluno(Long id);
 }
