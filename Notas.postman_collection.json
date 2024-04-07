@@ -1,0 +1,1038 @@
+{
+	"info": {
+		"_postman_id": "ed580d86-0c36-4bb1-92a0-f2aa800d96e3",
+		"name": "Notas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7842393"
+	},
+	"item": [
+		{
+			"name": "Alunos",
+			"item": [
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/alunos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alunos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/alunos/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alunos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Scheila Stihler\",\r\n    \"dataNascimento\": \"1978-07-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/alunos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alunos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Scheila Stihler Noronha\",\r\n    \"dataNascimento\": \"1978-07-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/alunos/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alunos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/alunos/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alunos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Professores",
+			"item": [
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/professores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"professores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/professores/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"professores",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Gabriel Augustin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/professores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"professores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"André Não Sei\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/professores/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"professores",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/professores/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"professores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Disciplinas",
+			"item": [
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/disciplinas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"disciplinas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/disciplinas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"disciplinas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Java\",\r\n    \"professor\": {\r\n        \"professorId\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/disciplinas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"disciplinas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Scheila Stihler Noronha\",\r\n    \"dataNascimento\": \"1978-07-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/disciplinas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"disciplinas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/disciplinas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"disciplinas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Notas",
+			"item": [
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/notas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/notas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nota\": 8.0,\r\n    \"coeficiente\": 0.6,\r\n    \"professor\": {\r\n        \"professorId\": 1\r\n    },\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Scheila Stihler Noronha\",\r\n    \"dataNascimento\": \"1978-07-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/notas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Matriculas",
+			"item": [
+				{
+					"name": "matriculas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/8.6.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/matriculas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"matriculas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successfully / 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "insomnia/8.6.1"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL1}}/matriculas",
+									"host": [
+										"{{baseURL1}}"
+									],
+									"path": [
+										"matriculas"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Apr 2024 01:59:03 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"matriculaId\": 3,\n  \"dataMatricula\": \"2024-04-03T09:00:00\",\n  \"mediaFinal\": 9,\n  \"disciplina\": {\n   \"disciplinaId\": 13,\n   \"nome\": \"História\",\n   \"professor\": {}\n  },\n  \"aluno\": {\n   \"alunoId\": 8,\n   \"nome\": \"Pedro\",\n   \"dataNascimento\": \"2024-01-01\"\n  },\n  \"notas\": []\n },\n {\n  \"matriculaId\": 5,\n  \"dataMatricula\": \"2024-04-05T12:00:00\",\n  \"mediaFinal\": 9.5,\n  \"disciplina\": {\n   \"disciplinaId\": 15,\n   \"nome\": \"Geografia\",\n   \"professor\": {}\n  },\n  \"aluno\": {\n   \"alunoId\": 10,\n   \"nome\": \"Lucas\",\n   \"dataNascimento\": \"2024-01-01\"\n  },\n  \"notas\": []\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "matriculas/:id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/8.6.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/matriculas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"matriculas",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successfully / 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "insomnia/8.6.1"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL1}}/matriculas/3",
+									"host": [
+										"{{baseURL1}}"
+									],
+									"path": [
+										"matriculas",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Apr 2024 01:59:13 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"matriculaId\": 3,\n \"dataMatricula\": \"2024-04-03T09:00:00\",\n \"mediaFinal\": 9,\n \"disciplina\": {\n  \"disciplinaId\": 13,\n  \"nome\": \"História\",\n  \"professor\": {}\n },\n \"aluno\": {\n  \"alunoId\": 8,\n  \"nome\": \"Pedro\",\n  \"dataNascimento\": \"2024-01-01\"\n },\n \"notas\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "matriculas/aluno/:id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/8.6.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/matriculas/aluno/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"matriculas",
+								"aluno",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successfully / 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "insomnia/8.6.1"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL1}}/matriculas/aluno/8",
+									"host": [
+										"{{baseURL1}}"
+									],
+									"path": [
+										"matriculas",
+										"aluno",
+										"8"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Apr 2024 02:00:05 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"matriculaId\": 3,\n  \"dataMatricula\": \"2024-04-03T09:00:00\",\n  \"mediaFinal\": 9,\n  \"disciplina\": {\n   \"disciplinaId\": 13,\n   \"nome\": \"História\",\n   \"professor\": {}\n  },\n  \"aluno\": {\n   \"alunoId\": 8,\n   \"nome\": \"Pedro\",\n   \"dataNascimento\": \"2024-01-01\"\n  },\n  \"notas\": []\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "matriculas/disciplina/:id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/8.6.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/matriculas/disciplina/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"matriculas",
+								"disciplina",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successfully / 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "insomnia/8.6.1"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL1}}/matriculas/disciplina/15",
+									"host": [
+										"{{baseURL1}}"
+									],
+									"path": [
+										"matriculas",
+										"disciplina",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Apr 2024 02:00:08 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"matriculaId\": 5,\n  \"dataMatricula\": \"2024-04-05T12:00:00\",\n  \"mediaFinal\": 9.5,\n  \"disciplina\": {\n   \"disciplinaId\": 15,\n   \"nome\": \"Geografia\",\n   \"professor\": {}\n  },\n  \"aluno\": {\n   \"alunoId\": 10,\n   \"nome\": \"Lucas\",\n   \"dataNascimento\": \"2024-01-01\"\n  },\n  \"notas\": []\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "professores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/professores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"professores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "matriculas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "insomnia/8.6.1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"disciplina\": {\r\n        \"disciplinaId\":1\r\n    },\r\n    \"aluno\": {\r\n        \"alunoId\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/matriculas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"matriculas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "matriculas/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "insomnia/8.6.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/matriculas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"matriculas",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successfully / 200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "User-Agent",
+										"value": "insomnia/8.6.1"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL1}}/matriculas/11",
+									"host": [
+										"{{baseURL1}}"
+									],
+									"path": [
+										"matriculas",
+										"11"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Apr 2024 01:29:56 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"matriculaId\": 11,\n \"dataMatricula\": null,\n \"mediaFinal\": 0,\n \"disciplina\": {\n  \"disciplinaId\": 11,\n  \"nome\": \"Matemática\",\n  \"professor\": {}\n },\n \"aluno\": {\n  \"alunoId\": 7,\n  \"nome\": \"Maria\",\n  \"dataNascimento\": \"2024-01-01\"\n },\n \"notas\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "matriculas/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/8.6.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/matriculas/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"matriculas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "folderName",
+			"value": ""
+		}
+	]
+}
