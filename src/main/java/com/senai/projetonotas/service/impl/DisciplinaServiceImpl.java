@@ -61,3 +61,4 @@ public class DisciplinaServiceImpl implements DisciplinaService {
         return Drepository.findAllByProfessorProfessorId(id);
     }
 }
+
