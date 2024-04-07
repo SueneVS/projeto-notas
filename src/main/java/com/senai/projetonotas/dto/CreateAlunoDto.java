@@ -1,8 +1,11 @@
 package com.senai.projetonotas.dto;
 
-import org.springframework.validation.annotation.Validated;
 
-import java.time.LocalDate;
+import lombok.NonNull;
+import org.springframework.lang.NonNullApi;
 
-public record CreateAlunoDto(@Validated String nome, @Validated String dataNascimento) {
+import javax.validation.Valid;
+
+
+public record CreateAlunoDto(String nome, String dataNascimento) {
 }

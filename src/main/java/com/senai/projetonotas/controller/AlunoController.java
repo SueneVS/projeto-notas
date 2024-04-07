@@ -1,7 +1,8 @@
 package com.senai.projetonotas.controller;
 
 import com.senai.projetonotas.dto.CreateAlunoDto;
-import com.senai.projetonotas.dto.ResponseNovoAlunoDto;
+import com.senai.projetonotas.dto.ResponseAlunoDto;
+import com.senai.projetonotas.dto.UpdateAlunoDto;
 import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.service.AlunoService;
 import com.senai.projetonotas.util.JsonUtil;
@@ -34,45 +35,45 @@ public class AlunoController {
     return ResponseEntity.ok(service.getEntities());
   }
 
-  @GetMapping("{id}")
-  public ResponseEntity<AlunoEntity> getEntity(@PathVariable(name = "id") Long id) {
+  @GetMapping("/{id}")
+  public ResponseEntity<ResponseAlunoDto> getEntity(@PathVariable(name = "id") Long id) {
     log.info("GET/alunos/{} -->Início",id);
 
-    List<AlunoEntity> aluno = service.getEntities(id);
+    ResponseAlunoDto dto = service.getEntityDto(id);
     log.info("GET /alunos/{} -> ID encontrado", id);
 
     log.info("GET /alunos/{} -> 200 OK",id);
-    log.debug("GET /alunos/{} -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(aluno));
+    log.debug("GET /alunos/{} -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(dto.toString()));
 
-    return ResponseEntity.ok(service.getEntity(id));
+    return ResponseEntity.ok(dto);
   }
 
   @PostMapping
-  public ResponseEntity<ResponseNovoAlunoDto> create(@RequestBody CreateAlunoDto dto) {
+  public ResponseEntity<ResponseAlunoDto> create(@RequestBody CreateAlunoDto dto) {
     log.info("POST /alunos");
 
-    ResponseNovoAlunoDto NovoAlunodto = service.create(dto);
+    ResponseAlunoDto NovoAlunodto = service.create(dto);
     log.info("POST /alunos -> Cadastrado");
 
     log.info("POST /alunos -> 201 CREATED");
-    log.debug("POST /alunos -> Response Body:\n{}\n", JsonUtil.objetoParaJson(dto));
+    log.debug("POST /alunos -> Response Body:\n{}\n", JsonUtil.objetoParaJson(dto.toString()));
 
     return ResponseEntity.status(HttpStatus.CREATED).body(NovoAlunodto);
   }
 
-  @PutMapping("{id}")
-  public ResponseEntity<AlunoEntity> update(@PathVariable(name = "id") Long id, @RequestBody AlunoEntity dto) {
+  @PutMapping("/{id}")
+  public ResponseEntity<ResponseAlunoDto> update(@PathVariable(name = "id") Long id, @RequestBody UpdateAlunoDto dto) {
     log.info("PUT /alunos/{}", id);
 
-    AlunoEntity aluno = service.update(id, dto);
+    ResponseAlunoDto aluno = service.update(id, dto);
     log.info("PUT /alunos/{} -> Atualizado", id);
 
     log.info("PUT /alunos/{} -> 200 OK", id);
-    log.debug("PUT /alunos/{} -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(aluno));
+    log.debug("PUT /alunos/{} -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(aluno.toString()));
     return ResponseEntity.ok(service.update(id,dto));
   }
 
-  @DeleteMapping("{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
     log.info("DELETE /alunos/{}", id);
 
