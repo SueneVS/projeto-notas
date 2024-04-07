@@ -12,7 +12,9 @@ import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.ProfessorService;
+import com.senai.projetonotas.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 public class DisciplinaServiceImpl implements DisciplinaService {
 
     private final DisciplinaRepository repository;
@@ -51,9 +54,15 @@ public class DisciplinaServiceImpl implements DisciplinaService {
             }
             throw new CampoObrigatorioException(erros.toString());
         }
+        log.info("Buscando professor por id ({}) -> Encontrado", dto.professorId());
         ProfessorEntity professor =  professorService.getEntity(dto.professorId());
 
+
         DisciplinaEntity disciplina = repository.save(new DisciplinaEntity(dto.nome(), professor));
+        log.info("Criando disciplina-> Salvo com sucesso");
+        log.debug("Criando disciplina -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(disciplina.toString()));
+
+        log.info("transformando a disciplinas em DTO");
 
         return new ResponseDisciplinaDto(
                 disciplina.getDisciplinaId(),
@@ -65,19 +74,29 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
     @Override
     public void delete(Long id) {
+        log.info("Buscando disciplina por id ({}) -> Encontrado", id);
         DisciplinaEntity disciplina = getEntity(id);
+        log.info("Excluindo disciplina com id ({}) -> Excluindo", id);
         repository.delete(disciplina);
+        log.info("Excluindo disciplina com id ({}) -> Excluído com sucesso", id);
+
     }
 
     @Override
     public ResponseDisciplinaDto update(Long id, RequestDisciplinaDto dto) {
         DisciplinaEntity disciplina = getEntity(id);
+        log.info("Alterando disciplina com id ({}) -> Salvar: \n{}\n", id, JsonUtil.objetoParaJson(dto.toString()));
+
         disciplina.setNome(dto.nome());
         if(dto.professorId() != null){
             ProfessorEntity professor =  professorService.getEntity(dto.professorId());
             disciplina.setProfessor(professor);
         }
         repository.save(disciplina);
+        log.info("Alterando disciplina -> Salvo com sucesso");
+        log.debug("Alterando disciplina -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(disciplina.toString()));
+
+        log.info("transformando a disciplinas em DTO");
         return new ResponseDisciplinaDto(
                 disciplina.getDisciplinaId(),
                 disciplina.getNome(),
@@ -88,6 +107,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
     @Override
     public DisciplinaEntity getEntity(Long id) {
+        log.info("Buscando disciplina por id ({})", id);
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrada disciplina com id: " +id));
     }
 
@@ -96,6 +116,10 @@ public class DisciplinaServiceImpl implements DisciplinaService {
     public ResponseDisciplinaDto getEntityDto(Long id) {
         DisciplinaEntity disciplina = getEntity(id);
 
+        log.info("Buscando disciplina por id ({}) -> Encontrado", id);
+        log.debug("Buscando disciplina por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(disciplina.toString()));
+
+        log.info("transformando a disciplinas em DTO");
         return new ResponseDisciplinaDto(
                 disciplina.getDisciplinaId(),
                 disciplina.getNome(),
@@ -107,13 +131,19 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
     @Override
     public List<DisciplinaEntity> getEntities() {
-        return repository.findAll();
+        log.info("Buscando todos as disciplina");
+        List<DisciplinaEntity> disciplinas = repository.findAll();
+
+        log.info("Buscando todos os alunos -> {} Encontrados", disciplinas.size());
+        log.debug("Buscando todos os alunos -> Registros encontrados:\n{}\n", JsonUtil.objetoParaJson(disciplinas.toString()));
+
+        return disciplinas;
     }
 
     @Override
     public List<ResponseDisciplinaDto> getEntitiesDto (){
         List<DisciplinaEntity> disciplinas = getEntities();
-
+        log.info("Transformando as disciplinas em dto");
         return disciplinas.stream()
                 .map(disciplina -> new ResponseDisciplinaDto(
                         disciplina.getDisciplinaId(),
@@ -126,6 +156,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
     @Override
     public List<MatriculaEntity> getEntitiesProfessor(Long id) {
+        log.info("Buscando todas as disciplinas do professor com id {}", id);
         return repository.findAllByProfessorProfessorId(id);
     }
 }

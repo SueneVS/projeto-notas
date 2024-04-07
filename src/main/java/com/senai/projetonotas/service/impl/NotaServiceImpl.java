@@ -13,6 +13,7 @@ import com.senai.projetonotas.repository.NotaRepository;
 import com.senai.projetonotas.service.MatriculaService;
 import com.senai.projetonotas.service.NotaService;
 import com.senai.projetonotas.service.ProfessorService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 public class NotaServiceImpl implements NotaService {
 
   private final NotaRepository repository;
@@ -71,37 +73,48 @@ public class NotaServiceImpl implements NotaService {
       throw new CampoObrigatorioException(erros.toString());
     }
 
+    log.info("Buscando matricula por id ({}) -> Encontrado", dto.matriculaId());
     MatriculaEntity matricula = matriculaService.getEntity(dto.matriculaId());
-
+    log.info("Buscando professor por id ({}) -> Encontrado", dto.professorId());
     ProfessorEntity professor = professorService.getEntity(dto.professorId());
 
-
+    log.info("Valida se o professor esta associado na matricula");
     if (matricula.getDisciplina().getProfessor().getProfessorId() != dto.professorId()) {
       throw new ProfessorNaoAssociadoException("O professor não está associado à matrícula fornecida.");
     }
 
+    log.info("Valida se o coeficiente é valido");
     if ((matricula.somaCoeficiente() + dto.coeficiente()) > 1.0) {
       throw new CoeficienteAcimaDoLimiteException("A Soma do Coeficiente de "+(matricula.somaCoeficiente() + dto.coeficiente())+" passou se do limite permitido .");
     }
 
-
+    log.info("Criando nota-> Salvo com sucesso");
     NotaEntity newNota = repository.saveAndFlush(new NotaEntity(dto.nota(),dto.coeficiente(),professor,matricula));
     matriculaService.updateMediaMatricula (matricula.getMatriculaId());
+
+    log.info("transformando a nota em DTO");
     return new ResponseNotaDto(newNota.getNotaId(), newNota.getNota(), newNota.getCoeficiente());
   }
   @Override
   public void delete(Long id) {
     NotaEntity newNota = getEntity(id);
+
+    log.info("Excluindo nota com id ({}) -> Excluindo", id);
     repository.deleteById(id);
     matriculaService.updateMediaMatricula (newNota.getMatricula().getMatriculaId());
   }
 
   @Override
   public List<NotaEntity> getNotasByMatriculaId(Long matriculaId) {
+    log.info("Buscando notas pela matricula por id ({}) -> Encontrado", matriculaId);
     List<NotaEntity> notas = repository.findAllByMatricula_MatriculaId(matriculaId);
+
+    log.info("Valida se a matricula tem nota vinculado");
     if (notas.isEmpty()) {
       throw new NotFoundException("Matrícula inexistente ou sem nota(s) cadastrada(s)");
     }
+
+    log.info("Retorna todas as notas da matricula");
     return notas;
   }
 
@@ -112,6 +125,7 @@ public class NotaServiceImpl implements NotaService {
     if (notas.isEmpty()) {
       throw new NotFoundException("Matrícula inexistente ou sem nota(s) cadastrada(s)");
     }
+    log.info("transformando as notas em DTO");
     return notas.stream()
             .map(nota -> new ResponseNotaDto(nota.getNotaId(), nota.getNota(), nota.getCoeficiente()))
             .collect(Collectors.toList());
@@ -124,17 +138,15 @@ public class NotaServiceImpl implements NotaService {
 
   @Override
   public NotaEntity getEntity(Long id) {
+    log.info("Buscando nota por id ({})", id);
     return repository.findById(id).orElseThrow(() -> new NotFoundException("Nota não encontrada com o id: " +id));
   }
 
   @Override
   public List<NotaEntity> getEntities() {
+    log.info("Buscando todos as notas");
     return repository.findAll();
   }
 
-  @Override
-  public List<NotaEntity> getEntities(Long id) {
-    return repository.findAll();
-  }
 
 }
