@@ -23,16 +23,16 @@ public class AlunoController {
   private final AlunoService service;
 
   @GetMapping()
-  public ResponseEntity<List<AlunoEntity>> getEntities() {
+  public ResponseEntity<List<ResponseAlunoDto>> getEntities() {
     log.info("GET/alunos -->Início");
 
-    List<AlunoEntity> alunos = service.getEntities();
+    List<ResponseAlunoDto> alunos = service.getEntitiesDtos();
     log.info("GET /alunos -> Foram encontrados {} registros", alunos.size());
 
     log.info("GET /alunos -> 200 OK");
-    log.debug("GET /alunos -> Response Body:\n{}\n", JsonUtil.objetoParaJson(alunos));
+    log.debug("GET /alunos -> Response Body:\n{}\n", JsonUtil.objetoParaJson(alunos.toString()));
 
-    return ResponseEntity.ok(service.getEntities());
+    return ResponseEntity.ok(alunos);
   }
 
   @GetMapping("/{id}")

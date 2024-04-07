@@ -1,6 +1,7 @@
 package com.senai.projetonotas.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -36,6 +37,7 @@ public class AlunoEntity implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dataNascimento;
 
+    @JsonIgnoreProperties("aluno")
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<MatriculaEntity> matriculas;
 

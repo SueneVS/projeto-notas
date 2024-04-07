@@ -14,5 +14,5 @@ public interface AlunoService {
     public AlunoEntity getEntity (Long id);
     public ResponseAlunoDto getEntityDto (Long id);
     public List<AlunoEntity> getEntities ();
-    public List<AlunoEntity> getEntities(Long id);
+    public List<ResponseAlunoDto> getEntitiesDtos ();
 }

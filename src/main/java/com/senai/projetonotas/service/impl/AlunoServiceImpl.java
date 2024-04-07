@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -112,12 +113,28 @@ public class AlunoServiceImpl implements AlunoService {
         log.info("Buscando todos os alunos -> {} Encontrados", alunos.size());
         log.debug("Buscando todos os alunos -> Registros encontrados:\n{}\n", JsonUtil.objetoParaJson(alunos.toString()));
 
-        return repository.findAll();
+        return alunos;
 
     }
+
 
     @Override
-    public List<AlunoEntity> getEntities(Long id) {
-        return repository.findAll();
+    public List<ResponseAlunoDto> getEntitiesDtos() {
+        log.info("Buscando todos os alunos");
+
+        List<AlunoEntity> alunos = repository.findAll();
+
+        List<ResponseAlunoDto> alunosDtos  = alunos.stream()
+                .map(aluno -> new ResponseAlunoDto(aluno.getAlunoId(), aluno.getNome(), aluno.getDataNascimento()))
+                .collect(Collectors.toList());
+
+        log.info("Buscando todos os alunos -> {} Encontrados", alunosDtos .size());
+        log.debug("Buscando todos os alunos -> Registros encontrados:\n{}\n", JsonUtil.objetoParaJson(alunosDtos.toString()));
+
+
+        return alunosDtos;
+
     }
+
+
 }
