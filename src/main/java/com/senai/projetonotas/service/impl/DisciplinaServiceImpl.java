@@ -6,6 +6,7 @@ import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
+import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.ProfessorService;
@@ -42,24 +43,39 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
         DisciplinaEntity disciplina = repository.save(new DisciplinaEntity(dto.nome(), professor));
 
-        return new ResponseDisciplinaDto(disciplina.getDisciplinaId(),disciplina.getNome());
+        return new ResponseDisciplinaDto(
+                disciplina.getDisciplinaId(),
+                disciplina.getNome(),
+                disciplina.getProfessor().getProfessorId(),
+                disciplina.getProfessor().getNome()
+        );
     }
 
     @Override
     public void delete(Long id) {
-        getEntity(id);
-        repository.deleteById(id);
+        DisciplinaEntity disciplina = getEntity(id);
+        repository.delete(disciplina);
     }
 
     @Override
-    public DisciplinaEntity update(Long id, DisciplinaEntity dto) {
-        getEntity(id);
-        dto.setDisciplinaId(id);
-        return repository.saveAndFlush(dto);
+    public ResponseDisciplinaDto update(Long id, RequestDisciplinaDto dto) {
+        DisciplinaEntity disciplina = getEntity(id);
+        disciplina.setNome(dto.nome());
+        if(dto.professorId() != null){
+            ProfessorEntity professor =  professorService.getEntity(dto.professorId());
+            disciplina.setProfessor(professor);
+        }
+        repository.save(disciplina);
+        return new ResponseDisciplinaDto(
+                disciplina.getDisciplinaId(),
+                disciplina.getNome(),
+                disciplina.getProfessor().getProfessorId(),
+                disciplina.getProfessor().getNome()
+        );
     }
 
     public DisciplinaEntity getEntity(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Error"));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrada disciplina com id: " +id));
     }
 
     @Override

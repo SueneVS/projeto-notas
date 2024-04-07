@@ -12,7 +12,7 @@ import java.util.List;
 public interface DisciplinaService {
     public ResponseDisciplinaDto create(RequestDisciplinaDto dto);
     public void delete(Long id);
-    public DisciplinaEntity update (Long id, DisciplinaEntity dto);
+    public ResponseDisciplinaDto update (Long id, RequestDisciplinaDto dto);
     public DisciplinaEntity getEntity (Long id);
     public List<DisciplinaEntity> getEntities ();
     public List<MatriculaEntity> getEntitiesProfessor(Long id);

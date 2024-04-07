@@ -31,7 +31,7 @@ public class DisciplinaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DisciplinaEntity> update(@PathVariable(name = "id") Long id, @RequestBody DisciplinaEntity dto) {
+    public ResponseEntity<ResponseDisciplinaDto> update(@PathVariable(name = "id") Long id, @RequestBody RequestDisciplinaDto dto) {
         return ResponseEntity.ok(service.update(id,dto));
     }
 
