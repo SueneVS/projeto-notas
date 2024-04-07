@@ -14,6 +14,7 @@ public interface DisciplinaService {
     public void delete(Long id);
     public ResponseDisciplinaDto update (Long id, RequestDisciplinaDto dto);
     public DisciplinaEntity getEntity (Long id);
+    public ResponseDisciplinaDto getEntityDto(Long id);
     public List<DisciplinaEntity> getEntities ();
     public List<MatriculaEntity> getEntitiesProfessor(Long id);
 

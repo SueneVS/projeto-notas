@@ -74,9 +74,24 @@ public class DisciplinaServiceImpl implements DisciplinaService {
         );
     }
 
+    @Override
     public DisciplinaEntity getEntity(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrada disciplina com id: " +id));
     }
+
+
+    @Override
+    public ResponseDisciplinaDto getEntityDto(Long id) {
+        DisciplinaEntity disciplina = getEntity(id);
+
+        return new ResponseDisciplinaDto(
+                disciplina.getDisciplinaId(),
+                disciplina.getNome(),
+                disciplina.getProfessor().getProfessorId(),
+                disciplina.getProfessor().getNome()
+        );
+    }
+
 
     @Override
     public List<DisciplinaEntity> getEntities() {
