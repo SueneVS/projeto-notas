@@ -8,16 +8,13 @@ import com.senai.projetonotas.exception.customException.CampoObrigatorioExceptio
 import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.AlunoRepository;
 import com.senai.projetonotas.service.AlunoService;
-import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.util.JsonUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,7 +48,6 @@ public class AlunoServiceImpl implements AlunoService {
         aluno = repository.save(aluno);
 
         log.info("Criando aluno-> Salvo com sucesso");
-        log.debug("Criando aluno -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(aluno.toString()));
 
         return  new ResponseAlunoDto(aluno.getAlunoId(),aluno.getNome(),aluno.getDataNascimento());
     }
@@ -80,7 +76,6 @@ public class AlunoServiceImpl implements AlunoService {
 
         repository.save(aluno);
         log.info("Alterando aluno -> Salvo com sucesso");
-        log.debug("Alterando aluno -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(aluno.toString()));
 
         return new ResponseAlunoDto(aluno.getAlunoId(),aluno.getNome(), aluno.getDataNascimento());
     }
@@ -92,7 +87,6 @@ public class AlunoServiceImpl implements AlunoService {
         AlunoEntity aluno = repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrado aluno com id: " +id));
 
         log.info("Buscando aluno por id ({}) -> Encontrado", id);
-        log.debug("Buscando aluno por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(aluno.toString()));
 
         return new ResponseAlunoDto(aluno.getAlunoId(),aluno.getNome(),aluno.getDataNascimento());
     }
@@ -104,7 +98,6 @@ public class AlunoServiceImpl implements AlunoService {
         AlunoEntity aluno = repository.findById(id).orElseThrow(() -> new NotFoundException("Não encontrado aluno com id: " +id));
 
         log.info("Buscando aluno por id ({}) -> Encontrado", id);
-//        log.debug("Buscando aluno por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(aluno.toString()));
 
         return aluno;
     }
@@ -116,7 +109,6 @@ public class AlunoServiceImpl implements AlunoService {
         List<AlunoEntity> alunos = repository.findAll();
 
         log.info("Buscando todos os alunos -> {} Encontrados", alunos.size());
-        log.debug("Buscando todos os alunos -> Registros encontrados:\n{}\n", JsonUtil.objetoParaJson(alunos.toString()));
 
         return alunos;
 

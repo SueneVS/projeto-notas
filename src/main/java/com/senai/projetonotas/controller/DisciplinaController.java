@@ -2,11 +2,9 @@ package com.senai.projetonotas.controller;
 
 import com.senai.projetonotas.dto.RequestDisciplinaDto;
 import com.senai.projetonotas.dto.ResponseDisciplinaDto;
-import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
 import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.DisciplinaService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

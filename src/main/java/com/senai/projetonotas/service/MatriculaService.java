@@ -16,6 +16,8 @@ public interface MatriculaService {
     public ResponseMatriculaDto getEntityDto (Long id);
     public List<MatriculaEntity> getEntities ();
 
+    public List<ResponseMatriculaDto> getEntitiesDtos();
+
     public List<MatriculaEntity> getEntitiesDisciplina(Long id);
 
     List<ResponseMatriculaDto> getEntitiesDisciplinaDto(Long id);

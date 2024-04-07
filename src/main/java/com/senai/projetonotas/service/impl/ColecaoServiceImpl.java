@@ -1,7 +1,6 @@
 package com.senai.projetonotas.service.impl;
 
 import com.senai.projetonotas.service.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 

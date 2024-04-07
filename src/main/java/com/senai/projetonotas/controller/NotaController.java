@@ -2,10 +2,8 @@ package com.senai.projetonotas.controller;
 
 import com.senai.projetonotas.dto.RequestNotaDto;
 import com.senai.projetonotas.dto.ResponseNotaDto;
-import com.senai.projetonotas.entity.NotaEntity;
 import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.NotaService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

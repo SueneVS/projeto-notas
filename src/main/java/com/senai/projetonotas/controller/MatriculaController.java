@@ -43,8 +43,8 @@ public class MatriculaController {
 
 
     @GetMapping()
-    public ResponseEntity<List<MatriculaEntity>> getEntities() {
-        return ResponseEntity.ok(service.getEntities());
+    public ResponseEntity<List<ResponseMatriculaDto>> getEntities() {
+        return ResponseEntity.ok(service.getEntitiesDtos());
     }
 
 

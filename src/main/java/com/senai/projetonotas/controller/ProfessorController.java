@@ -1,13 +1,9 @@
 package com.senai.projetonotas.controller;
 
-
 import com.senai.projetonotas.dto.RequestProfessorDto;
 import com.senai.projetonotas.dto.ResponseProfessorDto;
-import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.ProfessorService;
-import com.senai.projetonotas.service.impl.ProfessorServiceImpl;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

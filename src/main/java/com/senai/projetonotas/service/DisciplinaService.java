@@ -1,7 +1,5 @@
 package com.senai.projetonotas.service;
 
-import com.senai.projetonotas.dto.DtoGenericRequest;
-import com.senai.projetonotas.dto.DtoGenericResponse;
 import com.senai.projetonotas.dto.RequestDisciplinaDto;
 import com.senai.projetonotas.dto.ResponseDisciplinaDto;
 import com.senai.projetonotas.entity.DisciplinaEntity;

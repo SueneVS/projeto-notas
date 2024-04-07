@@ -134,6 +134,23 @@ public class MatriculaServiceImpl implements MatriculaService {
     }
 
     @Override
+    public List<ResponseMatriculaDto> getEntitiesDtos() {
+        List<MatriculaEntity> matriculas = getEntities();
+
+        log.info("transformando a matriculas em DTO");
+        return matriculas.stream()
+            .map(matricula -> new ResponseMatriculaDto(
+                matricula.getMatriculaId(),
+                matricula.getMediaFinal(),
+                matricula.getDisciplina().getDisciplinaId(),
+                matricula.getDisciplina().getNome(),
+                matricula.getAluno().getAlunoId(),
+                matricula.getAluno().getNome()
+            ))
+            .collect(Collectors.toList());
+    }
+
+    @Override
     public List<MatriculaEntity> getEntitiesDisciplina(Long id) {
         List<MatriculaEntity> matriculas = repository.findAllByDisciplinaDisciplinaId(id);
 
@@ -163,10 +180,10 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     @Override
     public List<MatriculaEntity> getEntitiesAluno(Long id) {
-        log.info("Buscando matriculas do alino com id ({}) -> Encontrado", id);
+        log.info("Buscando matriculas do aluno com id ({}) -> Encontrado", id);
 
         List<MatriculaEntity> matriculas = repository.findAllByAlunoAlunoId(id);
-        log.debug("Buscando matriculas do alino com id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(matriculas.toString()));
+        log.debug("Buscando matriculas do aluno com id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(matriculas.toString()));
 
         log.info("Valida se o aluna é existente ou se apresenta alguma matricula vinculada");
         if (matriculas.isEmpty()) {
