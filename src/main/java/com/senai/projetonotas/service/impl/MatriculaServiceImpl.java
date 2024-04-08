@@ -114,7 +114,6 @@ public class MatriculaServiceImpl implements MatriculaService {
         MatriculaEntity matricula = getEntity(id);
 
         log.info("Buscando matricula por id ({}) -> Encontrado", id);
-        log.debug("Buscando matricula por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(matricula.toString()));
 
         log.info("transformando a disciplinas em DTO");
         return new ResponseMatriculaDto(matricula.getMatriculaId(),
@@ -183,7 +182,6 @@ public class MatriculaServiceImpl implements MatriculaService {
         log.info("Buscando matriculas do aluno com id ({}) -> Encontrado", id);
 
         List<MatriculaEntity> matriculas = repository.findAllByAlunoAlunoId(id);
-        log.debug("Buscando matriculas do aluno com id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(matriculas.toString()));
 
         log.info("Valida se o aluna é existente ou se apresenta alguma matricula vinculada");
         if (matriculas.isEmpty()) {
