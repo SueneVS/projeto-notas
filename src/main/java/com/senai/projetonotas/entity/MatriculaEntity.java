@@ -34,12 +34,12 @@ public class MatriculaEntity implements Serializable {
     private double mediaFinal;
 
     @JsonIgnoreProperties({"matriculas", "professor"})
-    @ManyToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER) // Indica que é uma chave estrangeira e não pode ser nula
+    @ManyToOne(optional = false) // Indica que é uma chave estrangeira e não pode ser nula
     @JoinColumn(name = "disciplina_id") // Configura a coluna do banco de dados
     private DisciplinaEntity disciplina;
 
     @JsonIgnoreProperties("matriculas")
-    @ManyToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER) // Indica que é uma chave estrangeira e não pode ser nula
+    @ManyToOne(optional = false) // Indica que é uma chave estrangeira e não pode ser nula
     @JoinColumn(name = "aluno_id") // Configura a coluna do banco de dados
     private AlunoEntity aluno;
 
