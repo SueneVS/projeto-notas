@@ -49,24 +49,20 @@ public class NotaServiceImpl implements NotaService {
   public ResponseNotaDto create(RequestNotaDto dto) {
 
     if (
-            (dto.nota() < 0  && dto.nota() > 10)
-            || (dto.coeficiente() < 0 && dto.coeficiente() > 10)
-            || dto.professorId() == null
+            (dto.nota() < 0.0  || dto.nota() > 10.0)
+            || (dto.coeficiente() <= 0.0 || dto.coeficiente() > 1.0)
             || dto.matriculaId() == null)  {
       ArrayList<String> erros = new ArrayList<>();
 
       if (dto.matriculaId() == null) {
         erros.add("O campo 'matriculaId' é obrigatorio, informe um valor valido");
       }
-      if (dto.professorId() == null) {
-        erros.add("O campo 'professorId' é obrigatorio, informe um valor valido");
-      }
 
-      if (dto.nota() == 0) {
+      if (dto.nota() < 0.0  || dto.nota() > 10.0) {
         erros.add("O campo 'nota' é obrigatorio, informe um valor valido");
       }
 
-      if (dto.coeficiente() == 0) {
+      if (dto.coeficiente() <= 0.0 || dto.coeficiente() > 1.0) {
         erros.add("O campo 'coeficiente' é obrigatorio, informe um valor valido");
       }
 
@@ -75,13 +71,7 @@ public class NotaServiceImpl implements NotaService {
 
     log.info("Buscando matricula por id ({}) -> Encontrado", dto.matriculaId());
     MatriculaEntity matricula = matriculaService.getEntity(dto.matriculaId());
-    log.info("Buscando professor por id ({}) -> Encontrado", dto.professorId());
-    ProfessorEntity professor = professorService.getEntity(dto.professorId());
 
-    log.info("Valida se o professor esta associado na matricula");
-    if (matricula.getDisciplina().getProfessor().getProfessorId() != dto.professorId()) {
-      throw new ProfessorNaoAssociadoException("O professor não está associado à matrícula fornecida.");
-    }
 
     log.info("Valida se o coeficiente é valido");
     if ((matricula.somaCoeficiente() + dto.coeficiente()) > 1.0) {
@@ -89,7 +79,11 @@ public class NotaServiceImpl implements NotaService {
     }
 
     log.info("Criando nota-> Salvo com sucesso");
-    NotaEntity newNota = repository.saveAndFlush(new NotaEntity(dto.nota(),dto.coeficiente(),professor,matricula));
+    NotaEntity newNota = repository.saveAndFlush(
+            new NotaEntity(dto.nota(),
+                    dto.coeficiente(),
+                    matricula.getDisciplina().getProfessor(),
+                    matricula));
     matriculaService.updateMediaMatricula (matricula.getMatriculaId());
 
     log.info("transformando a nota em DTO");

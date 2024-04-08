@@ -1,8 +1,7 @@
 package com.senai.projetonotas.service;
 
-import com.senai.projetonotas.dto.DtoGenericRequest;
-import com.senai.projetonotas.dto.DtoGenericResponse;
 import com.senai.projetonotas.dto.RequestDisciplinaDto;
+import com.senai.projetonotas.dto.ResponseAlunoDto;
 import com.senai.projetonotas.dto.ResponseDisciplinaDto;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
@@ -20,6 +19,7 @@ public interface DisciplinaService {
     public ResponseDisciplinaDto getEntityDto(Long id);
     public List<DisciplinaEntity> getEntities ();
     public List<ResponseDisciplinaDto> getEntitiesDto ();
-    public List<MatriculaEntity> getEntitiesProfessor(Long id);
+    public List<DisciplinaEntity> getEntitiesProfessor(Long id);
+    public List<ResponseDisciplinaDto> getEntitiesProfessordto(Long id);
 
 }
