@@ -29,6 +29,7 @@ public interface MatriculaService {
 
     public void updateMediaMatricula(Long id);
 
+    List<ResponseMatriculaDto> MediaAlunoDto(Long id);
 }
 
 

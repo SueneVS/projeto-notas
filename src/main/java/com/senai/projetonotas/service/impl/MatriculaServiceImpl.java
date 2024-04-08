@@ -13,7 +13,6 @@ import com.senai.projetonotas.repository.MatriculaRepository;
 import com.senai.projetonotas.service.AlunoService;
 import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.MatriculaService;
-import com.senai.projetonotas.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -228,6 +227,23 @@ public class MatriculaServiceImpl implements MatriculaService {
         return new MediaAlunoDto(notas);
     }
 
+    @Override
+    public List<ResponseMatriculaDto> MediaAlunoDto(Long id) {
+        List<MatriculaEntity> matriculas = getEntitiesAluno(id);
+
+        log.info("transformando a matriculas em DTO");
+        return matriculas.stream()
+                .map(matricula -> new ResponseMatriculaDto(
+                        matricula.getMatriculaId(),
+                        matricula.getMediaFinal(),
+                        matricula.getDisciplina().getDisciplinaId(),
+                        matricula.getDisciplina().getNome(),
+                        matricula.getAluno().getAlunoId(),
+                        matricula.getAluno().getNome()
+                ))
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public void updateMediaMatricula(Long id) {
@@ -254,6 +270,8 @@ public class MatriculaServiceImpl implements MatriculaService {
         repository.saveAndFlush(matricula);
         log.info("Alterando a media da matricula -> Salvo com sucesso");
     }
+
+
 }
 
 

@@ -98,9 +98,9 @@ public class MatriculaController {
     public ResponseEntity<MediaAlunoDto> getMediasAluno(@PathVariable(name = "id")Long id) {
 
         log.info("GET/matriculas/alunos/{}/media -->Início", id);
-        //List<ResponseMatriculaDto> dto = service.getMediaAlunoDto(id);
+        List<ResponseMatriculaDto> dto = service.MediaAlunoDto(id);
         log.info("GET /matriculas/alunos/{}/media-> Matricula por disciplina encontrada", id);
-        //log.debug("GET /matriculas/alunos/{}/media -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(dto.toString()));
+        log.debug("GET /matriculas/alunos/{}/media -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(dto.toString()));
         return ResponseEntity.ok(service.getMediaAluno(id));
     }
 
