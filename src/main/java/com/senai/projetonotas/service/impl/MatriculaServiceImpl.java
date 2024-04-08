@@ -13,7 +13,6 @@ import com.senai.projetonotas.repository.MatriculaRepository;
 import com.senai.projetonotas.service.AlunoService;
 import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.MatriculaService;
-import com.senai.projetonotas.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -114,7 +113,6 @@ public class MatriculaServiceImpl implements MatriculaService {
         MatriculaEntity matricula = getEntity(id);
 
         log.info("Buscando matricula por id ({}) -> Encontrado", id);
-        log.debug("Buscando matricula por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(matricula.toString()));
 
         log.info("transformando a disciplinas em DTO");
         return new ResponseMatriculaDto(matricula.getMatriculaId(),
@@ -131,6 +129,23 @@ public class MatriculaServiceImpl implements MatriculaService {
     public List<MatriculaEntity> getEntities() {
         log.info("Buscando todos as matriculas");
         return repository.findAll();
+    }
+
+    @Override
+    public List<ResponseMatriculaDto> getEntitiesDtos() {
+        List<MatriculaEntity> matriculas = getEntities();
+
+        log.info("transformando a matriculas em DTO");
+        return matriculas.stream()
+            .map(matricula -> new ResponseMatriculaDto(
+                matricula.getMatriculaId(),
+                matricula.getMediaFinal(),
+                matricula.getDisciplina().getDisciplinaId(),
+                matricula.getDisciplina().getNome(),
+                matricula.getAluno().getAlunoId(),
+                matricula.getAluno().getNome()
+            ))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -163,10 +178,9 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     @Override
     public List<MatriculaEntity> getEntitiesAluno(Long id) {
-        log.info("Buscando matriculas do alino com id ({}) -> Encontrado", id);
+        log.info("Buscando matriculas do aluno com id ({}) -> Encontrado", id);
 
         List<MatriculaEntity> matriculas = repository.findAllByAlunoAlunoId(id);
-        log.debug("Buscando matriculas do alino com id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(matriculas.toString()));
 
         log.info("Valida se o aluna é existente ou se apresenta alguma matricula vinculada");
         if (matriculas.isEmpty()) {
@@ -213,6 +227,23 @@ public class MatriculaServiceImpl implements MatriculaService {
         return new MediaAlunoDto(notas);
     }
 
+    @Override
+    public List<ResponseMatriculaDto> MediaAlunoDto(Long id) {
+        List<MatriculaEntity> matriculas = getEntitiesAluno(id);
+
+        log.info("transformando a matriculas em DTO");
+        return matriculas.stream()
+                .map(matricula -> new ResponseMatriculaDto(
+                        matricula.getMatriculaId(),
+                        matricula.getMediaFinal(),
+                        matricula.getDisciplina().getDisciplinaId(),
+                        matricula.getDisciplina().getNome(),
+                        matricula.getAluno().getAlunoId(),
+                        matricula.getAluno().getNome()
+                ))
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public void updateMediaMatricula(Long id) {
@@ -239,4 +270,9 @@ public class MatriculaServiceImpl implements MatriculaService {
         repository.saveAndFlush(matricula);
         log.info("Alterando a media da matricula -> Salvo com sucesso");
     }
+
+
 }
+
+
+

@@ -1,17 +1,13 @@
 package com.senai.projetonotas.service.impl;
 
 import com.senai.projetonotas.dto.RequestProfessorDto;
-import com.senai.projetonotas.dto.ResponseAlunoDto;
 import com.senai.projetonotas.dto.ResponseProfessorDto;
 import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
 import com.senai.projetonotas.exception.customException.NotFoundException;
-import com.senai.projetonotas.repository.DisciplinaRepository;
 import com.senai.projetonotas.repository.ProfessorRepository;
-import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.ProfessorService;
 import com.senai.projetonotas.util.JsonUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +32,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
         log.info("Criando professor-> Salvo com sucesso");
         ProfessorEntity professor = professorRepository.save(new ProfessorEntity(dto.nome()));
-        log.debug("Criando disciplina -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(professor.toString()));
+        log.debug("Criando professor -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(professor.toString()));
         log.info("transformando a professor em DTO");
         return new ResponseProfessorDto(professor.getProfessorId(), professor.getNome());
     }

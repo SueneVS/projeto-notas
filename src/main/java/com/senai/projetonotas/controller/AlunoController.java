@@ -3,11 +3,8 @@ package com.senai.projetonotas.controller;
 import com.senai.projetonotas.dto.CreateAlunoDto;
 import com.senai.projetonotas.dto.ResponseAlunoDto;
 import com.senai.projetonotas.dto.UpdateAlunoDto;
-import com.senai.projetonotas.entity.AlunoEntity;
 import com.senai.projetonotas.service.AlunoService;
-import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.util.JsonUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,7 +71,7 @@ public class AlunoController {
 
     log.info("PUT /alunos/{} -> 200 OK", id);
     log.debug("PUT /alunos/{} -> Response Body:\n{}\n", id, JsonUtil.objetoParaJson(aluno.toString()));
-    return ResponseEntity.ok(service.update(id,dto));
+    return ResponseEntity.ok(aluno);
   }
 
   @DeleteMapping("/{id}")
@@ -85,7 +82,7 @@ public class AlunoController {
     log.info("DELETE /alunos/{} -> Excluído", id);
 
     log.info("DELETE /alunos/{} -> 204 NO CONTENT", id);
-    service.delete(id);
+
     return ResponseEntity.noContent().build();
   }
 }

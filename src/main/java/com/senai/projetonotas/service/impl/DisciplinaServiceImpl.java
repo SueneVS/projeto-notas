@@ -1,7 +1,6 @@
 package com.senai.projetonotas.service.impl;
 
 import com.senai.projetonotas.dto.RequestDisciplinaDto;
-import com.senai.projetonotas.dto.ResponseAlunoDto;
 import com.senai.projetonotas.dto.ResponseDisciplinaDto;
 import com.senai.projetonotas.entity.DisciplinaEntity;
 import com.senai.projetonotas.entity.MatriculaEntity;
@@ -9,11 +8,9 @@ import com.senai.projetonotas.entity.ProfessorEntity;
 import com.senai.projetonotas.exception.customException.CampoObrigatorioException;
 import com.senai.projetonotas.exception.customException.NotFoundException;
 import com.senai.projetonotas.repository.DisciplinaRepository;
-import com.senai.projetonotas.service.ColecaoService;
 import com.senai.projetonotas.service.DisciplinaService;
 import com.senai.projetonotas.service.ProfessorService;
 import com.senai.projetonotas.util.JsonUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +57,6 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
         DisciplinaEntity disciplina = repository.save(new DisciplinaEntity(dto.nome(), professor));
         log.info("Criando disciplina-> Salvo com sucesso");
-        log.debug("Criando disciplina -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(disciplina.toString()));
 
         log.info("transformando a disciplinas em DTO");
 
@@ -94,7 +90,6 @@ public class DisciplinaServiceImpl implements DisciplinaService {
         }
         repository.save(disciplina);
         log.info("Alterando disciplina -> Salvo com sucesso");
-        log.debug("Alterando disciplina -> Registro Salvo: \n{}\n", JsonUtil.objetoParaJson(disciplina.toString()));
 
         log.info("transformando a disciplinas em DTO");
         return new ResponseDisciplinaDto(
@@ -117,7 +112,6 @@ public class DisciplinaServiceImpl implements DisciplinaService {
         DisciplinaEntity disciplina = getEntity(id);
 
         log.info("Buscando disciplina por id ({}) -> Encontrado", id);
-        log.debug("Buscando disciplina por id ({}) -> Registro encontrado:\n{}\n", id, JsonUtil.objetoParaJson(disciplina.toString()));
 
         log.info("transformando a disciplinas em DTO");
         return new ResponseDisciplinaDto(
@@ -135,7 +129,6 @@ public class DisciplinaServiceImpl implements DisciplinaService {
         List<DisciplinaEntity> disciplinas = repository.findAll();
 
         log.info("Buscando todos os alunos -> {} Encontrados", disciplinas.size());
-        log.debug("Buscando todos os alunos -> Registros encontrados:\n{}\n", JsonUtil.objetoParaJson(disciplinas.toString()));
 
         return disciplinas;
     }
@@ -155,9 +148,24 @@ public class DisciplinaServiceImpl implements DisciplinaService {
     }
 
     @Override
-    public List<MatriculaEntity> getEntitiesProfessor(Long id) {
+    public List<DisciplinaEntity> getEntitiesProfessor(Long id) {
         log.info("Buscando todas as disciplinas do professor com id {}", id);
         return repository.findAllByProfessorProfessorId(id);
+    }
+
+    @Override
+    public List<ResponseDisciplinaDto> getEntitiesProfessordto(Long id) {
+       List<DisciplinaEntity> disciplinas = getEntitiesProfessor(id);
+
+        log.info("Transformando as disciplinas em dto");
+        return disciplinas.stream()
+                .map(disciplina -> new ResponseDisciplinaDto(
+                        disciplina.getDisciplinaId(),
+                        disciplina.getNome(),
+                        disciplina.getProfessor().getProfessorId(),
+                        disciplina.getProfessor().getNome()
+                ))
+                .collect(Collectors.toList());
     }
 }
 

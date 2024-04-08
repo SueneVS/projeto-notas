@@ -1,12 +1,10 @@
 package com.senai.projetonotas.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
@@ -36,12 +34,12 @@ public class MatriculaEntity implements Serializable {
     private double mediaFinal;
 
     @JsonIgnoreProperties({"matriculas", "professor"})
-    @ManyToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER) // Indica que é uma chave estrangeira e não pode ser nula
+    @ManyToOne(optional = false) // Indica que é uma chave estrangeira e não pode ser nula
     @JoinColumn(name = "disciplina_id") // Configura a coluna do banco de dados
     private DisciplinaEntity disciplina;
 
     @JsonIgnoreProperties("matriculas")
-    @ManyToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER) // Indica que é uma chave estrangeira e não pode ser nula
+    @ManyToOne(optional = false) // Indica que é uma chave estrangeira e não pode ser nula
     @JoinColumn(name = "aluno_id") // Configura a coluna do banco de dados
     private AlunoEntity aluno;
 
@@ -60,6 +58,14 @@ public class MatriculaEntity implements Serializable {
             coeficiente += nota.getCoeficiente();
         }
         return  coeficiente;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        // Define a data atual se a data de empréstimo for nula
+        if (dataMatricula == null) {
+            dataMatricula = LocalDate.now().atStartOfDay();
+        }
     }
 
 }

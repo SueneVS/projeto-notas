@@ -1,10 +1,5 @@
 package com.senai.projetonotas.service;
 
-import com.senai.projetonotas.dto.RequestProfessorDto;
-import com.senai.projetonotas.dto.ResponseProfessorDto;
-import com.senai.projetonotas.entity.ProfessorEntity;
-
-import java.util.List;
 
 public interface ColecaoService {
 
